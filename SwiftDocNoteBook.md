@@ -114,5 +114,27 @@
      serverResponseCode = nil
      // serverResponseCode now contains no value
      ``` 
-     
+  * If an optional has a value, it’s considered to be “not equal to” `nil`
+  * Forced Unwrapping : you can access its underlying value by adding an exclamation point(!) to the end of the optional’s name.
+   ```swift
+   if convertedNumber != nil {
+    print("convertedNumber has an integer value of \(convertedNumber!).")
+  }
+  // Prints "convertedNumber has an integer value of 123."
+   ```
+   * **Optional Binding**: check for a value inside an optional, and to extract that value into a constant or variable, as part of a single action.
+   ```swift
+   if let constantName = someOptional {
+     statements
+  }
+
+  if let actualNumber = Int(possibleNumber) {
+    print("The string \"\(possibleNumber)\" has an integer value of \(actualNumber)")
+  } else {
+    print("The string \"\(possibleNumber)\" couldn't be converted to an integer")
+  }
+  // Prints "The string "123" has an integer value of 123"
+   ```
+
+   
     
