@@ -116,6 +116,7 @@
      ``` 
   * If an optional has a value, it’s considered to be “not equal to” `nil`
   * Forced Unwrapping : you can access its underlying value by adding an exclamation point(!) to the end of the optional’s name.
+    * nil cannot be unwrapped forcefully
    ```swift
    if convertedNumber != nil {
     print("convertedNumber has an integer value of \(convertedNumber!).")
@@ -128,6 +129,10 @@
      statements
   }
 
+  let possibleNumber = "123"
+  let convertedNumber = Int(possibleNumber)
+  // convertedNumber is inferred to be of type "Int?", or "optional Int"
+
   if let actualNumber = Int(possibleNumber) {
     print("The string \"\(possibleNumber)\" has an integer value of \(actualNumber)")
   } else {
@@ -135,6 +140,7 @@
   }
   // Prints "The string "123" has an integer value of 123"
    ```
+   if the optional `Int` returned by `Int(possibleNumber)` contains a value, set a new constant called `actualNumber` to the value contained in the optional
 
    
     
