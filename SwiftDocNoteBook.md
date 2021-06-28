@@ -140,7 +140,29 @@
   }
   // Prints "The string "123" has an integer value of 123"
    ```
-   if the optional `Int` returned by `Int(possibleNumber)` contains a value, set a new constant called `actualNumber` to the value contained in the optional
+   * if the optional `Int` returned by `Int(possibleNumber)` contains a value, set a new constant called `actualNumber` to the value contained in the optional
 
+   * You can include as many optional bindings and Boolean conditions in a single if statement as you need to, **separated by commas**.
+   ```swift
+   if let firstNumber = Int("4"), let secondNumber = Int("42"), firstNumber < secondNumber && secondNumber < 100 {
+    print("\(firstNumber) < \(secondNumber) < 100")
+  }
+
+  if let firstNumber = Int("4") {
+    if let secondNumber = Int("42") {
+        if firstNumber < secondNumber && secondNumber < 100 {
+            print("\(firstNumber) < \(secondNumber) < 100")
+        }
+    }
+  }
+   ```
    
+   * Implicitly unwrapped optional : an optional will always have a value, after that value is first set.
+   ```swift
+   let possibleString: String? = "An optional string."
+   let forcedString: String = possibleString! // requires an exclamation point
+
+   let assumedString: String! = "An implicitly unwrapped optional string."
+   let implicitString: String = assumedString // no need for an exclamation point
+   ``` 
     

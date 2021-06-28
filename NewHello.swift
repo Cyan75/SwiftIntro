@@ -6,21 +6,21 @@ func print(){
 print()
 
 var a = 10
-print(a)
+print("a = \(a)")
 
 var b : String = "20"   
-print(b)
+print("b = \(b)")
 
 let c : Int = 30;
-print(c)
+print("c = \(c)")
 
 typealias newVariable = Int
 
 var d :newVariable  = 40
-print(d)
-
+print("d = \(d)")
+//tuple
 var tag = ("Name", "Cyan")
-print(tag)
+print("tag = \(tag)")
 
 var (typed, userInput) = tag
 print(typed)
@@ -29,15 +29,15 @@ print("His name is \(userInput)")
 print("His name is \(tag.1)")
 
 var e : Int?
-print(e)
+print("e = \(e)")
 e = 50
-print(e)
+print("e = \(e)")
 
 var f : Int?
-f = 55
+//f = 55
 if (f != nil) {
-    print("the variable is not nil")    
+    print("f = \(f)")    
 }
 else {
-    print("the variable is nil")
+    print("f = \(f)")
 }
