@@ -13,7 +13,7 @@ print("b = \(b)")
 
 let c : Int = 30;
 print("c = \(c)")
-
+//type alias
 typealias newVariable = Int
 
 var d :newVariable  = 40
@@ -28,16 +28,24 @@ print(userInput)
 print("His name is \(userInput)")
 print("His name is \(tag.1)")
 
+//optional forced unwrapping
 var e : Int?
 print("e = \(e)")
 e = 50
 print("e = \(e)")
+print("e! = \(e!)")
 
+//Optional Binding
 var f : Int?
-//f = 55
+f = 55
 if (f != nil) {
     print("f = \(f)")    
 }
 else {
     print("f = \(f)")
 }
+//implicitly unwrapping
+var h: Int!
+h = 60
+let i = h
+print("i = \(i)")

@@ -1,4 +1,4 @@
-# Overview
+# The Basics
 * ## Adopting Modern Programming Patterns
   * Variables are always initialised before use
   * Array indices are checked for out-of-bounds errors
@@ -117,6 +117,7 @@
   * If an optional has a value, it’s considered to be “not equal to” `nil`
   * Forced Unwrapping : you can access its underlying value by adding an exclamation point(!) to the end of the optional’s name.
     * nil cannot be unwrapped forcefully
+    * **Use this only if the optional certainly contains a value, not nil**
    ```swift
    if convertedNumber != nil {
     print("convertedNumber has an integer value of \(convertedNumber!).")
@@ -156,8 +157,11 @@
     }
   }
    ```
-   
    * Implicitly unwrapped optional : an optional will always have a value, after that value is first set.
+     * Declare the optional with `!`
+       * whereas forced unwrapping requires `!` when using
+     * during class initialisation
+     * giving permission for the optional to be force-unwrapped if needed
    ```swift
    let possibleString: String? = "An optional string."
    let forcedString: String = possibleString! // requires an exclamation point
@@ -165,4 +169,23 @@
    let assumedString: String! = "An implicitly unwrapped optional string."
    let implicitString: String = assumedString // no need for an exclamation point
    ``` 
-    
+     * [Forced Unwrapping vs Implicitly Unwrapping](https://stackoverflow.com/questions/38817494/difference-between-force-unwrapping-optionals-and-implicitly-unwrapped-optionals)
+     
+* ## Error Handling
+  *  a function encounters an error condition throws an error
+  ```swift
+  func canThrowAnError() throws {
+    // this function may or may not throw an error
+  }
+  ```
+  * try-catch 
+    ```swift
+    do {
+      try canThrowAnError()
+        // no error was thrown
+    } catch {
+      // an error was thrown
+      }
+    ```
+* ## Debugging with Assertion
+  * 
