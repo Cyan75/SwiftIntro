@@ -188,4 +188,12 @@
       }
     ```
 * ## Debugging with Assertion
-  * 
+  * When the boolean condition is...
+    * true : code execution continues as usual
+    * false : the current state of the program is invalid; code execution ends, and your app is terminated
+  ```swift
+  let age = -3
+  assert(age >= 0, "A person's age can't be less than zero.")
+  // This assertion fails because -3 isn't >= 0.
+  //false, and the assertion fails, terminating the application.
+  ```
