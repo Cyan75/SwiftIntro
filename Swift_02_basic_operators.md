@@ -25,7 +25,7 @@
 // Error because < can't compare Boolean values
  ```
  * Nil-Coalescing operator `a ?? b `
-   * unwraps an optional `a` if it contains a value and returns `b` if `a` is nil
+   * unwraps an optional `a` if it contains a value and returns `b` if `a` is `nil`
    * in other words, `a != nil ? a : b`
   ```swift
    let defaultColorName = "red"
@@ -38,7 +38,7 @@
     // userDefinedColorName isn't nil, so colorNameToUse is set to "green"
    ```
    * Range Operator
-     1. Closed Range Operator`(a...b)` : `a`, `a+1`, `a+2` ... `b-1`, `b`
+1. Closed Range Operator`(a...b)` : `a`, `a+1`, `a+2` ... `b-1`, `b`
 ```swift
      for index in 1...5 {
         print("\(index) times 5 is \(index * 5)")
