@@ -50,7 +50,7 @@
     // 5 times 5 is 25
 ```
 
-   2. Half-Open Range Operator`(a...<b)`: not including `b`
+   2. Half-Open Range Operator`(a..<b)`: not including `b`
   ```swift
     let names = ["Anna", "Alex", "Brian", "Jack"]
     let count = names.count

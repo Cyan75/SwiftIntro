@@ -85,7 +85,7 @@
   // Prints "the number of characters in cafe is 4"
   ```    
 * Accessing, modifying
-  * Swift strings cannot be indexed byinteger values
+  * Swift strings cannot be indexed by integer values
   * `startIndex`: position of the first character
   * `endIndex`: position after the last character
   * `before:` : 
@@ -123,3 +123,80 @@
    welcome.removeSubrange(range)
    // welcome now equals "hello"
    ``` 
+* Substrings
+  * work with substrings the same way as working with strings
+  * short-living: temporarily contains part of the string memory
+  ```swift
+  let greeting = "Hello, world!"
+  let index = greeting.firstIndex(of: ",") ?? greeting.endIndex
+  let beginning = greeting[..<index]
+  // beginning is "Hello"
+
+  // Convert the result to a String for long-term storage.
+  let newString = String(beginning)
+  ```
+* Comparing Strings
+  * use `==`, `!=`
+  * prefix and suffix equality: `hasPrefix`, `hasSuffix`
+   ```swift
+   let romeoAndJuliet = [
+    "Act 1 Scene 1: Verona, A public place",
+    "Act 1 Scene 2: Capulet's mansion",
+    "Act 1 Scene 3: A room in Capulet's mansion",
+    "Act 1 Scene 4: A street outside Capulet's mansion",
+    "Act 1 Scene 5: The Great Hall in Capulet's mansion",
+    "Act 2 Scene 1: Outside Capulet's mansion",
+    "Act 2 Scene 2: Capulet's orchard",
+    "Act 2 Scene 3: Outside Friar Lawrence's cell",
+    "Act 2 Scene 4: A street in Verona",
+    "Act 2 Scene 5: Capulet's mansion",
+    "Act 2 Scene 6: Friar Lawrence's cell"
+    ]
+    var act1SceneCount = 0
+    for scene in roimeoAndJuliet{
+        if(scene.hasPrefix("Act 1 ")){
+            act1SceneCount += 1
+        }
+    }
+    print("There are \(act1SceneCount) scenes in Act 1")
+    // Prints "There are 5 scenes in Act 1"
+   ```
+* Unicode Representations of Strings
+  * unicode scalar in the string are encoded in one of several Unicode-defined encoding forms with small chunks called code units
+    * UTF-8 : encode a sting as 8-bit code unit
+    * UTF-16 : encode a sting as 16-bit code unit
+    * UTF-32 : encode a sting as 32-bit code unit
+  ```swift
+  let dogString = "Dog‼🐶"
+  for codeUnit in dogString.utf8 {
+    print("\(codeUnit) ", terminator: "")
+  }
+  print("")
+  // Prints "68 111 103 226 128 188 240 159 144 182 "
+
+  for codeUnit in dogString.utf16 {
+    print("\(codeUnit) ", terminator: "")
+  }
+  print("")
+  // Prints "68 111 103 8252 55357 56374 "
+  ```
+  * UnicodeScalarView is a collection of values of type Unicode Scalar
+  ```swift
+  let dogString = "Dog‼🐶"
+  for scalar in dogString.unicodeScalars {
+    print("\(scalar.value) ", terminator: "")
+    }
+    print("")
+    // Prints "68 111 103 8252 128054 "
+
+    for scalar in dogString.unicodeScalars {
+        print("\(scalar) ")
+    }
+    // D
+    // o
+    // g
+    // ‼
+    // 🐶
+
+  ```
+
