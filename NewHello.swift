@@ -49,3 +49,14 @@ var h: Int!
 h = 60
 let i = h
 print("i = \(i)")
+
+
+var j : [Int] = []
+j.append(1)
+j.append(3)
+j.append(5)
+j.append(7)
+print(j)
+for j_i in j{
+ print (j_i)
+}
