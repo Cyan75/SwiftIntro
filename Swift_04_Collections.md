@@ -132,11 +132,119 @@
     ```swift
     var favoriteGenres: Set<String> = ["Rock", "Classical", "Hip hop"]
     // favoriteGenres has been initialized with three initial items
+
+    var favoriteGenres: Set = ["Rock", "Classical", "Hip hop"]
     ``` 
     * Because all values in the array literal are of the same type, Swift can infer that Set<String> is the correct type to use for the favoriteGenres variable.
     * Due to type inference, initialisation with literals does not need type specification
-    ```swift
-    var favoriteGenres: Set = ["Rock", "Classical", "Hip hop"]
-    ```
 
+  * Accessing and Modifying a Set
+    1. `.count` : read-only 
+    ```swift
+    print("I have \(favoriteGenres.count) favorite music genres.")
+    // Prints "I have 3 favorite music genres."
+    ```
+    2. `isEmpty`
+    ```swift
+    if favoriteGenres.isEmpty {
+      print("As far as music goes, I'm not picky.")
+    } else {
+      print("I have particular music preferences.")
+      }
+      // Prints "I have particular music preferences."
+    ```
+    3. `insert(_:)`
+    ```swift
+    favoriteGenres.insert("Jazz")
+    // favoriteGenres now contains 4 items
+    ```
+    4. `remove(_:)` and `removeAll()`
+    ```swift
+    if let removedGenre = favoriteGenres.remove("Rock") {
+      print("\(removedGenre)? I'm over it.")
+    } else {
+      print("I never much cared for that.")
+      }
+      // Prints "Rock? I'm over it."
+    ```
+    5. `contains(_:)`
+    ```swift
+    if favoriteGenres.contains("Funk") {
+      print("I get up on the good foot.")
+      } else {
+        print("It's too funky in here.")
+        }
+        // Prints "It's too funky in here."
+    ``` 
+  * Iterating Over a Set
+    * `for-in` loop
+    ```swift
+    for genre in favoriteGenres {
+      print("\(genre)")
+    }
+    // Classical
+    // Jazz
+    // Hip hop
+    ```
+    * `sorted()` : as Swift sets do not have a defined ordering, 
+    ```swift
+    for genre in favoriteGenres.sorted() {
+      print("\(genre)")
+      }
+      // Classical
+      // Hip hop
+      // Jazz
+    ```
+* ## Performing Set Operations
+  * Fundamental Set Operations
+    1. `intersection(_:)` : creat a new set with only the values common to both sets
+    2. `symmetricDifference(_:)` : create a new set with values in either set, but not both
+    3. `union(_:)` : create a new set with all of the values in both sets
+    4. `subtracting(_:)` create a new set with values not in the specified set
+    ```swift
+    let oddDigits: Set = [1, 3, 5, 7, 9]
+    let evenDigits: Set = [0, 2, 4, 6, 8]
+    let singleDigitPrimeNumbers: Set = [2, 3, 5, 7]
+
+    oddDigits.union(evenDigits).sorted()
+    // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    oddDigits.intersection(evenDigits).sorted()
+    // []
+    oddDigits.subtracting(singleDigitPrimeNumbers).sorted()
+    // [1, 9]
+    oddDigits.symmetricDifference(singleDigitPrimeNumbers).sorted()
+    // [1, 2, 9]
+    ```
+  * Set Membershop and Equality 
+    1. `==` (is equal) : determine whether two sets contain all of the same values
+    2. `isSubset(of:)` : determine whether all of the values of a set are contained in the specified set
+    3. `isSuperset(of:)` : determine whether a set contains all of the values in a specified set
+    4. `isStrictSubset(of:)` or `isStrictSuperset(of:)` : determine whether a set is a subset or superset, but not equal to, a specified set
+    5. `isDisjoint(with:)` : determine whether two sets have no values in common
+    ```Swift
+    let houseAnimals: Set = ["🐶", "🐱"]
+    let farmAnimals: Set = ["🐮", "🐔", "🐑", "🐶", "🐱"]
+    let cityAnimals: Set = ["🐦", "🐭"]
+
+    houseAnimals.isSubset(of: farmAnimals)
+    // true
+    farmAnimals.isSuperset(of: houseAnimals)
+    // true
+    farmAnimals.isDisjoint(with: cityAnimals)
+    // true
+    ```
+* ## Dictionaries
+> association between the same type and values of the same type with no defined ordering
+> each value is associated with a unique key
+  * Creating an Empty Dictionary : if the context provides type information, an empty dictionay can be created with an empty literal
+  ```swift
+  var namesOfIntegers: [Int: String] = [:]
+  // namesOfIntegers is an empty [Int: String] dictionary
+
+  namesOfIntegers[16] = "sixteen"
+  // namesOfIntegers now contains 1 key-value pair
+  namesOfIntegers = [:]
+  // namesOfIntegers is once again an empty dictionary of type [Int: String]
+  ```
+  * 
 
