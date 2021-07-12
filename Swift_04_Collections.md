@@ -246,5 +246,88 @@
   namesOfIntegers = [:]
   // namesOfIntegers is once again an empty dictionary of type [Int: String]
   ```
-  * 
-
+  * Creating a Dictionary with a Dictionary Literal
+    ```swift
+    var airports: [String: String] = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
+    ```
+    * Swift can infer that [String: String] is the correct type to use for the airports dictionary.
+  * Accessing and Modifying a Dictionary
+    1. `.count`
+    ```swift
+    print("The airports dictionary contains \(airports.count) items.")
+    // Prints "The airports dictionary contains 2 items."
+    ``` 
+    1. `isEmpty`
+    ```swift
+    if airports.isEmpty {
+      print("The airports dictionary is empty.")
+      } else {
+        print("The airports dictionary isn't empty.")
+        }
+        // Prints "The airports dictionary isn't empty."
+    ```
+    1. add an item with subscript syntax
+    ```swift
+    airports["LHR"] = "London"
+    // the airports dictionary now contains 3 items
+    ```
+    1. change an item with subscript syntax
+    ```swift
+    airports["LHR"] = "London Heathrow"
+    // the value for "LHR" has been changed to "London Heathrow"
+    ```
+    1. change an item with `updateValue(_:forKey:)`
+    ```swift
+    if let oldValue = airports.updateValue("Dublin Airport", forKey: "DUB") {
+      print("The old value for DUB was \(oldValue).")
+    }
+    // Prints "The old value for DUB was Dublin."
+    ```
+    1. remove value with subscript syntax
+    ```swift
+    airports["APL"] = "Apple International"
+    // "Apple International" isn't the real airport for APL, so delete it
+    airports["APL"] = nil
+    // APL has now been removed from the dictionary
+    ```
+    1. remove value with `removeValue`
+    ```swift
+    if let removedValue = airports.removeValue(forKey: "DUB") {
+      print("The removed airport's name is \(removedValue).")
+      } else {
+        print("The airports dictionary doesn't contain a value for DUB.")
+        }
+        // Prints "The removed airport's name is Dublin Airport."
+    ```
+  * Iterating over a Dictionary 
+    * `for-in` loop
+    ```swift
+    for (airportCode, airportName) in airports {
+      print("\(airportCode): \(airportName)")
+      }
+      // LHR: London Heathrow
+      // YYZ: Toronto Pearson
+    ```
+    * `keys` and `values`
+    ```swift
+    for airportCode in airports.keys {
+      print("Airport code: \(airportCode)")
+      }
+      // Airport code: LHR
+      // Airport code: YYZ
+      
+      for airportName in airports.values {
+        print("Airport name: \(airportName)")
+        }
+        // Airport name: London Heathrow
+        // Airport name: Toronto Pearson
+    ```
+    * `keys`, `values`, and an API that takes an Array instance
+    ```swift
+    let airportCodes = [String](airports.keys)
+    // airportCodes is ["LHR", "YYZ"]
+    
+    let airportNames = [String](airports.values)
+    // airportNames is ["London Heathrow", "Toronto Pearson"]
+    ```
+    * use `sorted()` to order in a specific order
