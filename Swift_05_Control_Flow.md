@@ -269,5 +269,147 @@ default:
 // Prints "On an axis, 9 from the origin"
 ```
 ## 4. Control Transfer Statements
+* `Continue` : 
+  * “I am done with the current loop iteration”
+  * tells a loop to stop what it is doing and start at the begining of the next iteration
+```swift
+let puzzleInput = "great minds think alike"
+var puzzleOutput = ""
+let charactersToRemove: [Character] = ["a", "e", "i", "o", "u", " "]
+for character in puzzleInput {
+    if charactersToRemove.contains(character) {
+        continue
+    }
+    puzzleOutput.append(character)
+}
+print(puzzleOutput)
+// Prints "grtmndsthnklk"
+```
+* `Break`
+  * ends execution of an entire control flow statement immediately
+  * transfers control to the code after the loop's closing brace
+  * breaks switch 
+  ```swift
+  let numberSymbol: Character = "三"  // Chinese symbol for the number 3
+  var possibleIntegerValue: Int?
+  switch numberSymbol {
+  case "1", "١", "一", "๑":
+    possibleIntegerValue = 1
+  case "2", "٢", "二", "๒":
+    possibleIntegerValue = 2
+  case "3", "٣", "三", "๓":
+    possibleIntegerValue = 3
+  case "4", "٤", "四", "๔":
+    possibleIntegerValue = 4
+  default:
+      break
+  }
+  if let integerValue = possibleIntegerValue {
+    print("The integer value of \(numberSymbol) is \(integerValue).")
+  } else {
+      print("An integer value couldn't be found for \(numberSymbol).")
+  }
+  // Prints "The integer value of 三 is 3."
+  ```
+* `Fallthrough`
+  * C-style switch w/o break at each case trial
+  ```swift
+  let integerToDescribe = 5
+  var description = "The number \(integerToDescribe) is"
+  switch integerToDescribe {
+  case 2, 3, 5, 7, 11, 13, 17, 19:
+      description += " a prime number, and also"
+      fallthrough
+  default:
+      description += " an integer."
+  }
+  print(description)
+  // Prints "The number 5 is a prime number, and also an integer."
+  ```
+* Labeled Statements  
+  * form 
+  ```swift
+  label name: while condition {
+    statements
+  }
+  ```
+  * to distinguish certain loops from another
+  * make it easier to utilise `break` and `continue` 
+  * *Ladders and Snakes*
+  ```swift
+  let finalSquare = 25
+  var board = [Int](repeating: 0, count: finalSquare + 1)
+  board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
+  board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
+  var square = 0
+  var diceRoll = 0
+
+  gameLoop: while square != finalSquare {
+    diceRoll += 1
+    if diceRoll == 7 { diceRoll = 1 }
+    switch square + diceRoll {
+    case finalSquare:
+        // diceRoll will move us to the final square, so the game is over
+        break gameLoop
+    case let newSquare where newSquare > finalSquare:
+        // diceRoll will move us beyond the final square, so roll again
+        continue gameLoop
+    default:
+        // this is a valid move, so find out its effect
+        square += diceRoll
+        square += board[square]
+    }
+  }
+  print("Game over!")
+  ```
 
 ## 5. Early Exit
+* `guard` 
+  * code shall be executed if and only if the condition in the `guard` statement is true
+  * a `guard` must have its corresponding `else`
+  * any var or constant that were assigned value using an optional binding as part of the condition are available for the rest of the code block 
+  * else must transfer control to exit the code block
+```swift
+func greet(person: [String: String]) {
+    guard let name = person["name"] else {
+        return
+    }
+
+    print("Hello \(name)!")
+
+    guard let location = person["location"] else {
+        print("I hope the weather is nice near you.")
+        return
+    }
+
+    print("I hope the weather is nice in \(location).")
+}
+
+greet(person: ["name": "John"])
+// Prints "Hello John!"
+// Prints "I hope the weather is nice near you."
+greet(person: ["name": "Jane", "location": "Cupertino"])
+// Prints "Hello Jane!"
+// Prints "I hope the weather is nice in Cupertino."
+```
+## 6. Checking API Availability
+* Swift has built-in support for checking API availability : protected from using unavailable APIs
+* form
+```swift
+if #available(platformName version, ..., *) {
+    statements to execute if the APIs are available
+} else {
+    fallback statements to execute if the APIs are unavailable
+}
+```
+* The compiler uses availability information in the SDK to verify that all of the APIs used in your code are available on the deployment target specified by your project. Swift reports an error at compile time if you try to use an API that isn’t available.
+* use `if` or `guard` statement
+* availability check w.r.t iOS and macOS 
+```swift
+if #available(iOS 10, macOS 10.12, *) {
+    // Use iOS 10 APIs on iOS, and use macOS 10.12 APIs on macOS
+} else {
+    // Fall back to earlier iOS and macOS APIs
+}
+```
+
