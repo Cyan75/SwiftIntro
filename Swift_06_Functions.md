@@ -230,3 +230,4 @@ someFunction(parameterWithoutDefault: 4) // parameterWithDefault is 12
   // Prints "Result: 6"
   ```
 * Function Types as Parameter Types  
+  * 
