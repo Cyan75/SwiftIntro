@@ -392,6 +392,7 @@ greet(person: ["name": "Jane", "location": "Cupertino"])
 // Prints "Hello Jane!"
 // Prints "I hope the weather is nice in Cupertino."
 ```
+
 ## 6. Checking API Availability
 * Swift has built-in support for checking API availability : protected from using unavailable APIs
 * form
