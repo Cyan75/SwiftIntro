@@ -19,6 +19,7 @@ print(sayHelloWorld())
 // Prints "hello, world"
 ```
 * Functions w/ multiple Parameters
+  * Function parameters are constant by default
 ```swift
 func greet(person: String, alreadyGreeted: Bool) -> String {
     if alreadyGreeted {
@@ -66,7 +67,8 @@ func minMax(array: [Int]) -> (min: Int, max: Int) {
     }
     return (currentMin, currentMax)
 }
-
+```
+```swift
 let bounds = minMax(array: [8, -6, 2, 109, 3, 71])
 print("min is \(bounds.min) and max is \(bounds.max)")
 // Prints "min is -6 and max is 109"
@@ -89,7 +91,8 @@ func minMax(array: [Int]) -> (min: Int, max: Int)? {
     }
     return (currentMin, currentMax)
 }
-
+```
+```swift
 if let bounds = minMax(array: [8, -6, 2, 109, 3, 71]) {
     print("min is \(bounds.min) and max is \(bounds.max)")
 }
@@ -126,7 +129,8 @@ func someFunction(argumentLabel parameterName: Int) {
     // In the function body, parameterName refers to the argument value
     // for that parameter.
 }
-
+```
+```swift
 func greet(person: String, from hometown: String) -> String {
     return "Hello \(person)!  Glad you could visit from \(hometown)."
 }
@@ -152,4 +156,77 @@ func someFunction(parameterWithoutDefault: Int, parameterWithDefault: Int = 12) 
 someFunction(parameterWithoutDefault: 3, parameterWithDefault: 6) // parameterWithDefault is 6
 someFunction(parameterWithoutDefault: 4) // parameterWithDefault is 12
 ```
-* Variadic Parameter
+* Variadic Parameter(`...`)
+  * can be passed  a varying number of input values when the function is called
+  * the value passed to a variadic parameter are made available within the functions's body as an array of the appropriate type
+  *  a function can have multiple variadic parameters
+  *  The first parameter that comes after a variadic parameter must have an argument label to avoid ambiguity
+  ```swift
+  func arithmeticMean(_ numbers: Double...) -> Double {
+    var total: Double = 0
+    for number in numbers {
+        total += number
+    }
+    return total / Double(numbers.count)
+  }
+  arithmeticMean(1, 2, 3, 4, 5)
+  // returns 3.0, which is the arithmetic mean of these five numbers
+  arithmeticMean(3, 8.25, 18.75)
+  // returns 10.0, which is the arithmetic mean of these three numbers
+  ```
+* In-Out Parameters(`inout`)
+  * to 'un-constantise' function parameters after the function call has ended 
+  * only variables
+  * no constants or literals
+  * place an ampersand(`&`) directly before a variable's name when you pass it as an argument to an in-out parameter
+  * inout parameters cannot have default values
+  * variadic parameteres cannot be marked as inout
+  ```swift
+  func swapTwoInts(_ a: inout Int, _ b: inout Int) {
+    let temporaryA = a
+    a = b
+    b = temporaryA
+  }
+  ```
+  ```swift
+  var someInt = 3
+  var anotherInt = 107
+  swapTwoInts(&someInt, &anotherInt)
+  print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
+  // Prints "someInt is now 107, and anotherInt is now 3"
+  ```
+
+## 5. Function Types
+* parameters and return type 
+  * “A function that has two parameters, both of type Int, and that returns a value of type Int.” or `(Int, Int) -> Int`
+  ```swift
+  func addTwoInts(_ a: Int, _ b: Int) -> Int {
+    return a + b
+  }
+  func multiplyTwoInts(_ a: Int, _ b: Int) -> Int {
+    return a * b
+  }
+  ```
+  * `() -> Void`
+  ```swift
+  func printHelloWorld() {
+    print("hello, world")
+  }
+  ```
+* Using Function Types 
+  * defining a constant or cariable to be of a function type
+  ```swift
+  var mathFunction: (Int, Int) -> Int = addTwoInts
+  ``` 
+  * calling the assigned function
+  ```swift
+  print("Result: \(mathFunction(2, 3))")
+  // Prints "Result: 5"
+  ```
+  * A different function with the same matching type can be assigned to the same variable, in the same way as for nonfunction types
+  ```swift
+  mathFunction = multiplyTwoInts
+  print("Result: \(mathFunction(2, 3))")
+  // Prints "Result: 6"
+  ```
+* Function Types as Parameter Types  
