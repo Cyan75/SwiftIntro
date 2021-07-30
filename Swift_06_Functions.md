@@ -230,4 +230,72 @@ someFunction(parameterWithoutDefault: 4) // parameterWithDefault is 12
   // Prints "Result: 6"
   ```
 * Function Types as Parameter Types  
-  * 
+  * passing function types to another another function
+  * leave some aspects of a function's implentation for the caller to provide when it calls
+  ```swift
+  func printMathResult(_ mathFunction: (Int, Int) -> Int, _ a: Int, _ b: Int) {
+    print("Result: \(mathFunction(a, b))")
+  }
+  printMathResult(addTwoInts, 3, 5)
+  // Prints "Result: 8"
+  ```
+* Function Types as Return Types
+  * write a function type right after `->`
+  ```swift
+  func stepForward(_ input: Int) -> Int {
+    return input + 1
+  }
+  func stepBackward(_ input: Int) -> Int {
+    return input - 1
+  }
+  ```
+  ```swift
+  func chooseStepFunction(backward: Bool) -> (Int) -> Int {
+    return backward ? stepBackward : stepForward
+  }
+  ```
+  ```swift
+  var currentValue = 3
+  let moveNearerToZero = chooseStepFunction(backward: currentValue > 0)
+  // moveNearerToZero now refers to the stepBackward() function
+  ```
+  ```swift
+  print("Counting to zero:")
+  // Counting to zero:
+  while currentValue != 0 {
+    print("\(currentValue)... ")
+    currentValue = moveNearerToZero(currentValue)
+  }
+  print("zero!")
+  // 3...
+  // 2...
+  // 1...
+  // zero!
+  ```
+
+## 6.Nested Functions
+* local functions in the body of other functions
+* an enclosing function can return one of its nested functions
+```swift
+func chooseStepFunction(backward: Bool) -> (Int) -> Int {
+    func stepForward(input: Int) -> Int { return input + 1 }
+    func stepBackward(input: Int) -> Int { return input - 1 }
+    return backward ? stepBackward : stepForward
+}
+var currentValue = -4
+let moveNearerToZero = chooseStepFunction(backward: currentValue > 0)
+// moveNearerToZero now refers to the nested stepForward() function
+while currentValue != 0 {
+    print("\(currentValue)... ")
+    currentValue = moveNearerToZero(currentValue)
+}
+print("zero!")
+// -4...
+// -3...
+// -2...
+// -1...
+// zero!
+```
+
+
+
