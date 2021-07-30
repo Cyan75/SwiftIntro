@@ -34,7 +34,7 @@ for index in 1...5 {
 // 4 times 5 is 20
 // 5 times 5 is 25
 ```
-* If you don’t need each value from a sequence, you can ignore the values by using an underscore in place of a variable name.
+* If you don’t need each value from a sequence, you can ignore the values by using an underscore(`_`) in place of a variable name.
 ```swift
 let base = 3
 let power = 10
