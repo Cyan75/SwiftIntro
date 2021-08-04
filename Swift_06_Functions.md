@@ -18,6 +18,14 @@ func sayHelloWorld() -> String {
 print(sayHelloWorld())
 // Prints "hello, world"
 ```
+* Functions w/ one parameter
+```swift
+func greetAgain(person: String) -> String {
+    return "Hello again, " + person + "!"
+}
+print(greetAgain(person: "Anna"))
+// Prints "Hello again, Anna!"
+```
 * Functions w/ multiple Parameters
   * Function parameters are constant by default
 ```swift
@@ -115,7 +123,7 @@ print(anotherGreeting(for: "Dave"))
 
 ## 4. Function Argument Labels and Parameter Names
 >* Argument Label : used when calling the function(default : parameter name)
->* Parameter Name : used in the implementation of the function(default : parameter name)
+>* Parameter Name : used in the implementation of the function
 ```swift
 func someFunction(firstParameterName: Int, secondParameterName: Int) {
     // In the function body, firstParameterName and secondParameterName
