@@ -89,8 +89,75 @@ someFunctionThatTakesAClosure() {
     // trailing closure's body goes here
 }
 ```
+* the string-sorting closure can be written outside the `sorted(by:)` method's parentheses as a trailing closure
+```swift
+reversedNames = names.sorted() { $0 > $1 }
+```
+* if a closure expression is the only argument of the function or method, `()` can be omitted
+```swift
+reversedNames = names.sorted { $0 > $1 }
+```
 
-
-
+* `map(_:)` : method of Array type, taking a closure expression as its single argument
+  * returns a new array containing all of the new mapped values
+  * in the same order as their corresponding values in the original array
+  * to create a new array `["OneSix", "FiveEight", "FiveOneZero"]`
+```swift
+let digitNames = [
+    0: "Zero", 1: "One", 2: "Two",   3: "Three", 4: "Four",
+    5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine"
+]
+let numbers = [16, 58, 510]
+```
+  * pass a closure expression to the array's `map(_:)` method as a trailing closure
+```swift
+let strings = numbers.map { (number) -> String in
+    var number = number
+    var output = ""
+    repeat {
+        output = digitNames[number % 10]! + output
+        number /= 10
+    } while number > 0
+    return output
+}
+// strings is inferred to be of type [String]
+// its value is ["OneSix", "FiveEight", "FiveOneZero"]
+```
+  * `!` after digitName : return an optional value to indicate that the dictionary lookup can fail if the key does not exist
+  * the string retrieved from digitNum dictionary is added to the front of output
+  * if a function takes multiple closures you omit the argument label for the first trailing closure and you label the remaining closures
+  ```swift
+   func loadPicture(from server: Server, completion: (Picture) -> Void, onFailure: () -> Void) {
+      if let picture = download("photo.jpg", from: server) {
+         completion(picture)
+      } else {
+        onFailure()
+      }
+  }
+  ```
+  * when you call this function to load a picture, you provide two closures :  
+    * a completion handler that displays a picture after a successful download
+    * a error handler that displays an error to the user
+    ```swift
+    loadPicture(from: someServer) { picture in
+    someView.currentPicture = picture
+    } onFailure: {
+        print("Couldn't download the next picture.")
+        }
+    ```
 
 ## 3. Capturing Values
+> a closure can acpture constants and vaiables from the surrounding context in which it is defined
+
+* a nested function is a closure that can capture values
+  * a nested function can capture any of its outer function's arguments, any constants, and variables
+```swift
+func makeIncrementer(forIncrement amount: Int) -> () -> Int {
+    var runningTotal = 0
+    func incrementer() -> Int {
+        runningTotal += amount
+        return runningTotal
+    }
+    return incrementer
+}
+```
