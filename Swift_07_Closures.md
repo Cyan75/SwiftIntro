@@ -135,7 +135,7 @@ let strings = numbers.map { (number) -> String in
       }
   }
   ```
-  * when you call this function to load a picture, you provide two closures :  
+  * when you call this function to load a picsture, you provide two closures :  
     * a completion handler that displays a picture after a successful download
     * a error handler that displays an error to the user
     ```swift
@@ -151,13 +151,122 @@ let strings = numbers.map { (number) -> String in
 
 * a nested function is a closure that can capture values
   * a nested function can capture any of its outer function's arguments, any constants, and variables
+  ```swift
+  func makeIncrementer(forIncrement amount: Int) -> () -> Int {
+      var runningTotal = 0
+      func incrementer() -> Int {
+          runningTotal += amount
+          return runningTotal
+      }
+      return incrementer
+  }
+  ```
+  * return type of `makeIncrementer` is `() -> Int` (a function returning a function)
+  * `makeIncrementer` defines an integer called `runningTotal` to store the current running total fo the increment that will be returned.
+  ```swift
+  func incrementer() -> Int {
+    runningTotal += amount
+    return runningTotal
+  }
+  ```
+  * `increment` does not have any parameter, but it referes to `runningTotal` and `amount` from within its function body
+  ```swift
+  let incrementByTen = makeIncrementer(forIncrement: 10)
+  ```  
+  ```swift
+  incrementByTen()
+  // returns a value of 10
+  incrementByTen()
+  // returns a value of 20
+  incrementByTen()
+  // returns a value of 30
+  ```
+  * creating a second incrementer will 
+  ```swift
+  let incrementBySeven = makeIncrementer(forIncrement: 7)
+  incrementBySeven()
+  // returns a value of 7
+  ```
+  * calling the original incrementer `incrementByTen` again continues to increment its own runningTotal vairable. 
+  * does not affect the variable captured by `incrementBySeven`
+  ```swift
+  incrementByTen()
+  // returns a value of 40
+  ```
+
+## 4.Closure Are Reference Types
+* Whenever you assign a function or a closure to a constant or a variable, you are actually setting that constant or variable to be a reference to the function or closure
+* if you assign a closure to two different constants or variables, both of those constants or variables refer to the same closure
 ```swift
-func makeIncrementer(forIncrement amount: Int) -> () -> Int {
-    var runningTotal = 0
-    func incrementer() -> Int {
-        runningTotal += amount
-        return runningTotal
-    }
-    return incrementer
-}
+let alsoIncrementByTen = incrementByTen
+alsoIncrementByTen()
+// returns a value of 50
+
+incrementByTen()
+// returns a value of 60
 ```
+ * calling `alsoIncrementByTen` is the same as calling `incrementByTen`
+ * both of them refer to the same closure, they both increment and return the same running total.
+
+## 5. Escaping Closures
+> a closure is said to escape afunction when the closure is passed as an argument to the function, but it is called after the function returns
+> `@escaping`
+
+* stored in a variable defined outside the function
+  * the function returns after it starts the operation, but the closure is not called until the operation is completed
+  * the closure needs to escape, to be called later
+  ```swift
+  var completionHandlers: [() -> Void] = []
+  func someFunctionWithEscapingClosure(completionHandler: @escaping () -> Void) {
+      completionHandlers.append(completionHandler)
+  }
+  ```
+  * If you didn’t mark the parameter of this function with @escaping, you would get a compile-time error
+* normally a closure captures variables implicitly by using them in the body of the closure
+
+* An escaping closure that refers to `self` needs special consideration if `self` refers to an instance of a class
+  * Capturing `self` in an escaping closure makes it easy to accidentally create a strong reference cycle : see ARC
+  * if you want to capture `self`, write `self` explicitly when you use it
+  ```swift
+  func someFunctionWithNonescapingClosure(closure: () -> Void) {
+    closure()
+  }
+
+  class SomeClass {
+      var x = 10
+      func doSomething() {
+          someFunctionWithEscapingClosure { self.x = 100 }
+          someFunctionWithNonescapingClosure { x = 200 }
+      }
+  }
+
+  let instance = SomeClass()
+  instance.doSomething()
+  print(instance.x)
+  // Prints "200"
+
+  completionHandlers.first?()
+  print(instance.x)
+  // Prints "100"
+  ```
+  * captures `self` by including it in the closure's capture list, and then refers to `self` implicitly
+  ```swift
+  class SomeOtherClass {
+    var x = 10
+    func doSomething() {
+        someFunctionWithEscapingClosure { [self] in x = 100 }
+        someFunctionWithNonescapingClosure { x = 200 }
+    }
+  }
+  ```
+  * `self` is an instance of a structure or an enumeration
+  * an escaping closure cannot apture a mutable reference to `self` when `self` is an instance of a structure or an enumeration
+  ```swift
+  struct SomeStruct {
+    var x = 10
+    mutating func doSomething() {
+        someFunctionWithNonescapingClosure { x = 200 }  // Ok
+        someFunctionWithEscapingClosure { x = 100 }     // Error
+    }
+  }
+  ```
