@@ -270,3 +270,71 @@ incrementByTen()
     }
   }
   ```
+  * escaping closures cannot capture  a mutable reference to `selfs` for structures
+
+## 6.Autoclosures
+* automatically create to wrap an expression that is being passed as an argument to a function
+* autoclosures do not take any arguments 
+* an autoclosure returns the value of the expression that is wrapped inside of it
+* braces around a functions can be omitted
+* it is common to call functions that take autoclosures
+* it is not common to implement functions that take autoclosures
+* evaluation delay : the code inside inside the autoclosure is not run until the closure is called
+  * benefit : can control when the code is evaluated
+```swift
+var customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
+print(customersInLine.count)
+// Prints "5"
+
+let customerProvider = { customersInLine.remove(at: 0) }
+print(customersInLine.count)
+// Prints "5" still..
+
+print("Now serving \(customerProvider())!")
+// Prints "Now serving Chris!"
+print(customersInLine.count)
+// Prints "4" at last!
+```
+* remove action is not done yet until the closure is actually called
+```swift
+// customersInLine is ["Alex", "Ewa", "Barry", "Daniella"]
+func serve(customer customerProvider: () -> String) {
+    print("Now serving \(customerProvider())!")
+}
+serve(customer: { customersInLine.remove(at: 0) } )
+// Prints "Now serving Alex!"
+```
+* `serve(customer:)` takes an autoclosure by making its parameter's type with the `@autoclosure` attribute
+* it behaves as if it took a `String` argument instead of a closure
+  * the argument is automatically converted to a closure because the `customerProvider` parameter's type is marked with the `@autoclosure` attribute
+```swift
+// customersInLine is ["Ewa", "Barry", "Daniella"]
+func serve(customer customerProvider: @autoclosure () -> String) {
+    print("Now serving \(customerProvider())!")
+}
+serve(customer: customersInLine.remove(at: 0))
+// Prints "Now serving Ewa!"
+
+```
+* However, excessive use of autoclosure can make your code hard to understand
+* **escaping autoclosures**(`@autoclosure` and `@escaping`)
+```swift
+// customersInLine is ["Barry", "Daniella"]
+var customerProviders: [() -> String] = []
+func collectCustomerProviders(_ customerProvider: @autoclosure @escaping () -> String) {
+    customerProviders.append(customerProvider)
+}
+collectCustomerProviders(customersInLine.remove(at: 0))
+collectCustomerProviders(customersInLine.remove(at: 0))
+
+print("Collected \(customerProviders.count) closures.")
+// Prints "Collected 2 closures."
+for customerProvider in customerProviders {
+    print("Now serving \(customerProvider())!")
+}
+// Prints "Now serving Barry!"
+// Prints "Now serving Daniella!"
+```
+* the `collectCustomerProviders(_:)` appends the closure to the `customerProviders`
+* `customerProviders` is declared outside the scope of the function :  the closures in the array can be executed after the function returns
+*  the value of the `customerProvider` argument must be allowed to escape the function’s scope
