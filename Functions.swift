@@ -65,11 +65,26 @@ print("min is \(bounds.min) and max is \(bounds.max)")
 //     }
 //     return (currentMin, currentMax)
 // }
-
-
-let names = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
-func backward(_ s1: String, _ s2: String) -> Bool {
-    return s1 > s2
+func arithmeticMean(_ data : Double...) -> Double{
+    var total : Double = 0;
+    for element in data{
+        total+=element;
+    }
+    return total / Double(data.count);
 }
-var reversedNames = names.sorted(by: backward)
-print(reversedNames)
+print(arithmeticMean(10,100,1000))
+
+
+
+
+//function types
+func addTwoInts(_ a : Int, _ b : Int) -> Int{
+    return a + b;
+}
+print("addTwoInts(33,22) =  \( addTwoInts(33,22) )");
+
+
+
+
+
+

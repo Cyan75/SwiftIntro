@@ -194,7 +194,7 @@ let strings = numbers.map { (number) -> String in
   // returns a value of 40
   ```
 
-## 4.Closure Are Reference Types
+## 4. Closure Are Reference Types
 * Whenever you assign a function or a closure to a constant or a variable, you are actually setting that constant or variable to be a reference to the function or closure
 * if you assign a closure to two different constants or variables, both of those constants or variables refer to the same closure
 ```swift
@@ -272,7 +272,7 @@ incrementByTen()
   ```
   * escaping closures cannot capture  a mutable reference to `selfs` for structures
 
-## 6.Autoclosures
+## 6. Autoclosures
 * automatically create to wrap an expression that is being passed as an argument to a function
 * autoclosures do not take any arguments 
 * an autoclosure returns the value of the expression that is wrapped inside of it
