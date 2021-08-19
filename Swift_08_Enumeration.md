@@ -114,3 +114,58 @@ case let .qrCode(productCode):
 ```
 
 ## 4.Raw Values
+* the same types of cases can be populated : each raw value must be unique
+```swift
+enum ASCIIControlCharacter: Character {
+    case tab = "\t"
+    case lineFeed = "\n"
+    case carriageReturn = "\r"
+}
+``` 
+  * the raw value for a particular enumeration case is always the same
+  * associated can be different each tume it is created as a new constant or variable
+* Implicitly Assigned Raw Values
+    * For enumeration storing integer or string raw values, swift may assign it automatically 
+    ```swift
+    enum Planet: Int {
+        case mercury = 1, venus, earth, mars, jupiter, saturn, uranus, neptune
+    }
+    ```
+  * Planet.mercury has an explicit raw value of 1, Planet.venus has an implicit raw value of 2, and so on
+  ```swift
+  enum CompassPoint: String {
+    case north, south, east, west
+  }
+  ```
+  * use `rawValue` property
+  ```swift
+  enum CompassPoint: String {
+    case north, south, east, west
+  }
+  ``` 
+* Initialising from a Raw Value
+  * defining an enumeration with a raw-value type ...
+    * calls an initializer that takes a value of the raw value’s type
+    * returns either an enumeration case or `nil`
+    * this initialiser can be used to create a new instance of the enumeration
+    ```swift
+    let possiblePlanet = Planet(rawValue: 7)
+    // possiblePlanet is of type Planet? and equals Planet.uranus
+    ```
+    * the raw value initialiser is a failable initialiser because not every raw value will return an enumeration case
+    ```swift
+    let positionToFind = 11
+    if let somePlanet = Planet(rawValue: positionToFind) {
+        switch somePlanet {
+        case .earth:
+            print("Mostly harmless")
+        default:
+            print("Not a safe place for humans")
+        }
+    } else {
+        print("There isn't a planet at position \(positionToFind)")
+    }
+    // Prints "There isn't a planet at position 11"
+    ```
+    * finding a planet with a position 11, the optional `Planet` will return `nil` for the raw value initialiser
+## 5.Recursive Enumerations
