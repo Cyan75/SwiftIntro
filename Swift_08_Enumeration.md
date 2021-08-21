@@ -168,4 +168,46 @@ enum ASCIIControlCharacter: Character {
     // Prints "There isn't a planet at position 11"
     ```
     * finding a planet with a position 11, the optional `Planet` will return `nil` for the raw value initialiser
-## 5.Recursive Enumerations
+
+## 5.Recursive Enumerations `indirect`
+* enumeration in another instance of the enumeration
+* `indirect` tells the compiler to insert the necessary layer of indirection
+```swift
+enum ArithmeticExpression {
+    case number(Int)
+    indirect case addition(ArithmeticExpression, ArithmeticExpression)
+    indirect case multiplication(ArithmeticExpression, ArithmeticExpression)
+}
+```
+* Defining an enumeration with `indirect` keyword enables indirection for all of the enumeration cases that have an associated value
+```swift
+indirect enum ArithmeticExpression {
+    case number(Int)
+    case addition(ArithmeticExpression, ArithmeticExpression)
+    case multiplication(ArithmeticExpression, ArithmeticExpression)
+}
+```
+  * for (5 + 4) * 2
+  ```swift
+  let five = ArithmeticExpression.number(5)
+  let four = ArithmeticExpression.number(4)
+  let sum = ArithmeticExpression.addition(five, four)
+  let product = ArithmeticExpression.multiplication(sum, ArithmeticExpression.number(2))
+  ```
+* A recursive function is a straightforward way to work with data that has a recursive structure
+```swift
+func evaluate(_ expression: ArithmeticExpression) -> Int {
+    switch expression {
+    case let .number(value):
+        return value
+    case let .addition(left, right):
+        return evaluate(left) + evaluate(right)
+    case let .multiplication(left, right):
+        return evaluate(left) * evaluate(right)
+    }
+}
+
+print(evaluate(product))
+// Prints "18"
+```  
+* 
