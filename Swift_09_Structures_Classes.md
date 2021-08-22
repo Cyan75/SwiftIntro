@@ -79,3 +79,45 @@ class VideoMode {
   * class instances do not receive a default memberwise initialiser
 
 ## 2. Structures and Enumerations Are Value Types
+* a value type's value is copied when assigning or being passed to a function
+* structure and enumeration type are always copied when they are passed around in your code
+* Collections of the standard libraries(arrays, dictionaries, and string) are optimised to reduce the performance cost of copying
+  * they share the memory where the elements are stored bwtween the original instance and any copies
+  * if one copy of the collection is modified, the elements are copied just before the modification
+```swift
+let hd = Resolution(width: 1920, height: 1080)
+var cinema = hd
+``` 
+  * a new copy of the existing instance is made and it is assigned to a new variable
+  ```swift
+  cinema.width = 2048
+  ```
+  * `width` of `cinema` has changed
+  ```swift
+  print("cinema is now \(cinema.width) pixels wide")
+  // Prints "cinema is now 2048 pixels wide"
+  ```
+  * `width` of hd instance still remains the same
+  ```swift
+  print("hd is still \(hd.width) pixels wide")
+  // Prints "hd is still 1920 pixels wide"
+  ```
+* enumeration has the same behaviour
+```swift
+enum CompassPoint {
+    case north, south, east, west
+    mutating func turnNorth() {
+        self = .north
+    }
+}
+var currentDirection = CompassPoint.west
+let rememberedDirection = currentDirection
+currentDirection.turnNorth()
+
+print("The current direction is \(currentDirection)")
+print("The remembered direction is \(rememberedDirection)")
+// Prints "The current direction is north"
+// Prints "The remembered direction is west"
+```
+
+## 3.Classes Are Reference Types
