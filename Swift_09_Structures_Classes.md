@@ -143,4 +143,21 @@ print("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
 * Even though `tenEighty` and `alsoTenEighty` are constants, `tenEighty.frameRate` and `alsoTenEighty.frameRate` can be changed because they refer the `VideoMode` instance
   * 'a const pointer'
 
-* Identity Operators
+* Identity Operators `===` & `!==`
+  * multiple constants and variabls can refer the same instance
+  * it is possible to compare the instances that are refered by two different constants or variables
+  ```swift
+  if tenEighty === alsoTenEighty {
+    print("tenEighty and alsoTenEighty refer to the same VideoMode instance.")
+    }
+    // Prints "tenEighty and alsoTenEighty refer to the same VideoMode instance."
+  ```
+  * `===` Identical to means that two constants or variables of class type refer to exactly the same class instance.
+  * `==` Equal to means that two instances are considered equal or equivalent in value, for some appropriate meaning of equal, as defined by the type’s designer.
+
+
+* Pointers
+  * refer to addresses in memory
+  * a Swift constant or variable that refers to an instance of some reference type is similar to a C type pointer 
+    * these references are defined like any other constant or variable
+    * the standard library provides pointer and buffer types to interact with pointers directly 
