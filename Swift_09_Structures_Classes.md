@@ -121,3 +121,26 @@ print("The remembered direction is \(rememberedDirection)")
 ```
 
 ## 3.Classes Are Reference Types
+* reference types are not copied when they are assigned or passed
+```swift
+let tenEighty = VideoMode()
+tenEighty.resolution = hd
+tenEighty.interlaced = true
+tenEighty.name = "1080i"
+tenEighty.frameRate = 25.0
+```
+* assign `tenEignty` to a new constant
+```swift
+let alsoTenEighty = tenEighty
+alsoTenEighty.frameRate = 30.0
+```
+* `tenEighty` and `alsoTenEighty` refer to the same instance
+  * two different name for the single instance
+```swift
+print("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
+// Prints "The frameRate property of tenEighty is now 30.0"
+```
+* Even though `tenEighty` and `alsoTenEighty` are constants, `tenEighty.frameRate` and `alsoTenEighty.frameRate` can be changed because they refer the `VideoMode` instance
+  * 'a const pointer'
+
+* Identity Operators
