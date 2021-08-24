@@ -30,3 +30,38 @@ rangeOfThreeItems.firstValue = 6
   ```
   * this is because structures are value types
     * all the properties of a constant instance of a value type are constant
+  * the properties can be changed in case the instance is of a constant reference type 
+
+* Lazy Stored Properties `lazy`
+  * a lazy stored property is a property whose initial value is not calculated until the first time it is used
+  * it must be declared to be **variable** 
+  * useful when...
+    * the initial value for a property is dependent on outside factors which is not known until after an instance's initialisation is complete
+    * the initial value for a property requires complex or computationally expensive setup that should not be performed unless or until it is neede
+  ```swift
+  class DataImporter {
+    /*
+    DataImporter is a class to import data from an external file.
+    The class is assumed to take a nontrivial amount of time to initialize.
+    */
+    var filename = "data.txt"
+        // the DataImporter class would provide data importing functionality here
+    }
+  class DataManager {
+    lazy var importer = DataImporter()
+    var data: [String] = []
+    // the DataManager class would provide data management functionality here
+  }
+  let manager = DataManager()
+  manager.data.append("Some data")
+  manager.data.append("Some more data")
+  // the DataImporter instance for the importer property hasn't yet been created
+  ```
+  * data importing functionality of `DataManager` is provided by `DataImporter` which is assumed to take a nontrivial amount of time to initialise
+  * the lazy property `importer` is only created when the `importer` property is first accessed 
+  ```swift
+  print(manager.importer.filename)
+  // the DataImporter instance for the importer property has now been created
+  // Prints "data.txt"
+  ```
+  * a `lazy`-marked property accessed by multiple threads can be initialised multiple times 
