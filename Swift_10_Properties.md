@@ -65,3 +65,101 @@ rangeOfThreeItems.firstValue = 6
   // Prints "data.txt"
   ```
   * a `lazy`-marked property accessed by multiple threads can be initialised multiple times 
+
+* Stored Properties and Instance Variables
+  * all information about the property including its name, type, and memory management characteristics is defined in a single location as part og the type's definition
+
+
+## 2.Computed Properties
+* Computed properties provide a getter and an optional setter
+```swift
+struct Point {
+    var x = 0.0, y = 0.0
+}
+struct Size {
+    var width = 0.0, height = 0.0
+}
+struct Rect {
+    var origin = Point()
+    var size = Size()
+    var center: Point {
+        get {
+            let centerX = origin.x + (size.width / 2)
+            let centerY = origin.y + (size.height / 2)
+            return Point(x: centerX, y: centerY)
+        }
+        set(newCenter) {
+            origin.x = newCenter.x - (size.width / 2)
+            origin.y = newCenter.y - (size.height / 2)
+        }
+    }
+}
+var square = Rect(origin: Point(x: 0.0, y: 0.0),
+                  size: Size(width: 10.0, height: 10.0))
+let initialSquareCenter = square.center
+square.center = Point(x: 15.0, y: 15.0)
+print("square.origin is now at (\(square.origin.x), \(square.origin.y))")
+// Prints "square.origin is now at (10.0, 10.0)"
+```
+  * `Point` encapsulates the x- and y-coordinate of a point
+  * `Size` encapsulates a width and a height
+  * `Rect` 
+    * defines a rectangle by an origin point and a size
+    * provides a computed property called `center`
+    * the current centre position of a `Rect` can be determined from its `origin` and `size`; storing another instance of `Point` for centre is unnecessary
+  * a new variable `square` is initialised with (0,0) and width = 10
+    * `center` of `square` is accessed through `.`
+
+* Shorthand Setter Declaration
+  * the default name for a computed property's new value is `newValue`
+  ```swift
+  struct AlternativeRect {
+    var origin = Point()
+    var size = Size()
+    var center: Point {
+        get {
+            let centerX = origin.x + (size.width / 2)
+            let centerY = origin.y + (size.height / 2)
+            return Point(x: centerX, y: centerY)
+        }
+        set {
+            origin.x = newValue.x - (size.width / 2)
+            origin.y = newValue.y - (size.height / 2)
+        }
+    }
+  }
+  ```
+* Shorthand Getter Declaration
+  * if the entire body of a getter is a single expression, the getter implicity returns that expression
+  ```swift
+  struct CompactRect {
+    var origin = Point()
+    var size = Size()
+    var center: Point {
+        get {
+            Point(x: origin.x + (size.width / 2),
+                  y: origin.y + (size.height / 2))
+        }
+        set {
+            origin.x = newValue.x - (size.width / 2)
+            origin.y = newValue.y - (size.height / 2)
+        }
+    }
+  }
+  ```
+* Read-Only Computed Properties
+  * a computed property with a getter but no setter 
+  * remove `get`
+  * always returns a value
+  * can be set through `.`
+  ```swift
+  struct Cuboid {
+    var width = 0.0, height = 0.0, depth = 0.0
+    var volume: Double {
+        return width * height * depth
+    }
+  }
+  let fourByFiveByTwo = Cuboid(width: 4.0, height: 5.0, depth: 2.0)
+  print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
+  // Prints "the volume of fourByFiveByTwo is 40.0"
+  ```
