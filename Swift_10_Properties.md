@@ -1,4 +1,5 @@
 # Properties
+> **A property, in some object-oriented programming languages, is a special sort of class member, intermediate in functionality between a field (or data member) and a method**
 > Properties associate values with a particular class, structure, or enumeration
 > Stored properties store constant and variable values as part of an instance
 
@@ -163,3 +164,25 @@ print("square.origin is now at (\(square.origin.x), \(square.origin.y))")
   print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
   // Prints "the volume of fourByFiveByTwo is 40.0"
   ```
+## 3.Property Observers
+* Property observers observe and respond to changes in a property's value
+  * Property observers are called every time when a property's value is set
+* can be added in the following places
+  * Stored properties that you define
+  * Stored properties that you inherit
+  * Computed properties that you inherit
+
+* inherited or computed property 
+  * a inherited property : a property in a subclass is overriden by a property observer
+  * a computed property : use the property’s setter to observe and respond to value changes, instead of trying to create an observer
+
+* `willSet` : called just before the value is stored
+  * it is passed the new property value as a constant parameter
+  * a name can be specified for this parameter as part of `willSet` implementation
+  * if there is no parameter name and parentheses within the implementation, the parameter is made available with a default parameter of `newValue`
+
+* `didSet` : called immediately after the new value is stored
+  * it is passed a constant parameter containing the old property value
+  * a name can be specified for this parameter or it uses the default `oldValue`
+  * if a value is assigned to a property within its own `didSet` observer, the new value that is assigned replaces the one that was just set
+  
