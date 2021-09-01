@@ -176,13 +176,83 @@ print("square.origin is now at (\(square.origin.x), \(square.origin.y))")
   * a inherited property : a property in a subclass is overriden by a property observer
   * a computed property : use the property’s setter to observe and respond to value changes, instead of trying to create an observer
 
-* `willSet` : called just before the value is stored
-  * it is passed the new property value as a constant parameter
-  * a name can be specified for this parameter as part of `willSet` implementation
-  * if there is no parameter name and parentheses within the implementation, the parameter is made available with a default parameter of `newValue`
+* `willSet` and `didSet`
+  * `willSet` : **called just before the value is stored**
+    * it is passed the new property value as a constant parameter
+    * a name can be specified for this parameter as part of `willSet` implementation
+    * if there is no parameter name and parentheses within the implementation, the parameter is made available with a default parameter of `newValue`
 
-* `didSet` : called immediately after the new value is stored
-  * it is passed a constant parameter containing the old property value
-  * a name can be specified for this parameter or it uses the default `oldValue`
-  * if a value is assigned to a property within its own `didSet` observer, the new value that is assigned replaces the one that was just set
+  * `didSet` : **called immediately after the new value is stored**
+    * it is passed a constant parameter containing the old property value
+    * a name can be specified for this parameter or it uses the default `oldValue`
+    * if a value is assigned to a property within its own `didSet` observer, the new value that is assigned replaces the one that was just set
   
+  * When a property is set in a subclass... 
+    * the superclass initialiser is called, 
+    * then, `willSet` and `didSet` observers of the superclass are called
+  * `willSet` and `didSet` are not called while a class is setting its own properties, before the superclass initialiser has been called
+
+```swift
+class StepCounter {
+    var totalSteps: Int = 0 {
+        willSet(newTotalSteps) {
+            print("About to set totalSteps to \(newTotalSteps)")
+        }
+        didSet {
+            if totalSteps > oldValue  {
+                print("Added \(totalSteps - oldValue) steps")
+            }
+        }
+    }
+}
+let stepCounter = StepCounter()
+stepCounter.totalSteps = 200
+// About to set totalSteps to 200
+// Added 200 steps
+stepCounter.totalSteps = 360
+// About to set totalSteps to 360
+// Added 160 steps
+stepCounter.totalSteps = 896
+// About to set totalSteps to 896
+// Added 536 steps
+```
+
+* passing a property that has observers to a function as an in-out parameter always calls the `willSet` and `didSet` observers
+  * ∵ in-out parameters are of copy-in copy-out memory model
+    * the value is always written back to the property at the end of the function
+
+## 4.Property Wrappers
+> * a property wrapper adds a layer of separation between code that manages how a property is stored and the code that defines a property
+
+* define a `wrapperValue` property in a structure, enumeration or class
+```swift
+@propertyWrapper
+struct TwelveOrLess {
+    private var number = 0
+    var wrappedValue: Int {
+        get { return number }
+        set { number = min(newValue, 12) }
+    }
+}
+```
+  * `number` is used only in the implementation of `TwelveOrLess` because it is a private variable 
+
+* You apply a wrapper to a property by writing the wrapper’s name before the property as an attribute
+```swift
+struct SmallRectangle {
+    @TwelveOrLess var height: Int
+    @TwelveOrLess var width: Int
+}
+
+var rectangle = SmallRectangle()
+print(rectangle.height)
+// Prints "0"
+
+rectangle.height = 10
+print(rectangle.height)
+// Prints "10"
+
+rectangle.height = 24
+print(rectangle.height)
+// Prints "12"
+```
