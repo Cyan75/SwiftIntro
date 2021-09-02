@@ -224,35 +224,132 @@ stepCounter.totalSteps = 896
 ## 4.Property Wrappers
 > * a property wrapper adds a layer of separation between code that manages how a property is stored and the code that defines a property
 
-* define a `wrapperValue` property in a structure, enumeration or class
-```swift
-@propertyWrapper
-struct TwelveOrLess {
-    private var number = 0
+  * define a `wrapperValue` property in a structure, enumeration or class
+  ```swift
+  @propertyWrapper
+  struct TwelveOrLess {
+      private var number = 0
+      var wrappedValue: Int {
+          get { return number }
+          set { number = min(newValue, 12) }
+      }
+  }
+  ```
+    * `number` is used only in the implementation of `TwelveOrLess` because it is a private variable 
+
+  * You apply a wrapper to a property by writing the wrapper’s name before the property as an attribute
+  ```swift
+  struct SmallRectangle {
+      @TwelveOrLess var height: Int
+      @TwelveOrLess var width: Int
+  }
+
+  var rectangle = SmallRectangle()
+  print(rectangle.height)
+  // Prints "0"
+
+  rectangle.height = 10
+  print(rectangle.height)
+  // Prints "10"
+
+  rectangle.height = 24
+  print(rectangle.height)
+  // Prints "12"
+  ```
+
+  * when a wrapper is applied to a property the complier synthesises 
+    * code that provides storage for the wrapper
+    * code that provides access to the property through a wrapper
+  * code that uses a property wrapper does not need to take advantage of the special attribute syntax
+  ```swift
+  struct SmallRectangle {
+    private var _height = TwelveOrLess()
+    private var _width = TwelveOrLess()
+    var height: Int {
+        get { return _height.wrappedValue }
+        set { _height.wrappedValue = newValue }
+    }
+    var width: Int {
+        get { return _width.wrappedValue }
+        set { _width.wrappedValue = newValue }
+    }
+  }
+  ```
+
+* Setting Initial Values for Wrapped Properties
+  * to support setting an initial value or other customisation the property wrapper needs to add an initialiser
+  ```swift
+  @propertyWrapper
+  struct SmallNumber {
+    private var maximum: Int
+    private var number: Int
+
     var wrappedValue: Int {
         get { return number }
-        set { number = min(newValue, 12) }
+        set { number = min(newValue, maximum) }
     }
-}
-```
-  * `number` is used only in the implementation of `TwelveOrLess` because it is a private variable 
 
-* You apply a wrapper to a property by writing the wrapper’s name before the property as an attribute
-```swift
-struct SmallRectangle {
-    @TwelveOrLess var height: Int
-    @TwelveOrLess var width: Int
-}
+    init() {
+        maximum = 12
+        number = 0
+    }
+    init(wrappedValue: Int) {
+        maximum = 12
+        number = min(wrappedValue, maximum)
+    }
+    init(wrappedValue: Int, maximum: Int) {
+        self.maximum = maximum
+        number = min(wrappedValue, maximum)
+    }
+  }
+  ```
+  * the three initialisers use to set the wrapped value and the maximum value
+  ```swift
+  struct ZeroRectangle {
+    @SmallNumber var height: Int
+    @SmallNumber var width: Int
+  }
 
-var rectangle = SmallRectangle()
-print(rectangle.height)
-// Prints "0"
+  var zeroRectangle = ZeroRectangle()
+  print(zeroRectangle.height, zeroRectangle.width)
+  // Prints "0 0"
+  ```
+  * the code inside the initialiser sets the initial wrapped value and the initial maximum value, using the default values of zero and 12
+  * the property wrapper still provides all of the initial values
+  * when you specify an intial value for the property, Swift uses initialiser that accepts those arguments to set up the wrapper
+  ```swift
+  struct NarrowRectangle {
+    @SmallNumber(wrappedValue: 2, maximum: 5) var height: Int
+    @SmallNumber(wrappedValue: 3, maximum: 4) var width: Int
+  }
 
-rectangle.height = 10
-print(rectangle.height)
-// Prints "10"
+  var narrowRectangle = NarrowRectangle()
+  print(narrowRectangle.height, narrowRectangle.width)
+  // Prints "2 3"
 
-rectangle.height = 24
-print(rectangle.height)
-// Prints "12"
-```
+  narrowRectangle.height = 100
+  narrowRectangle.width = 100
+  print(narrowRectangle.height, narrowRectangle.width)
+  // Prints "5 4"
+  ```
+  * the instance of `SmallNumber` that wraps `height` is created by calling `SmallNumber(wrappedValue: 2, maximum: 5)` and the instance that wraps `width` is created by calling `SmallNumber(wrappedValue: 3, maximum: 4)`
+  * by including arguments to the property wrapper, setting up the initial state in the wrapper or passing other options to the wrapper are possible when it is created
+  * this syntax is the most general way to use a property wrapper
+  * you can provide whatever arguments you need to the attribute and they are passed to the initialiser
+  * when you include property wrapper argumernts, you can also specify an initial value using assignment 
+  * Swift treats the assignment like a `wrappedValue` argument and uses the initialiser that accepts the arguments you include
+  ```swift
+  struct MixedRectangle {
+    @SmallNumber var height: Int = 1
+    @SmallNumber(maximum: 9) var width: Int = 2
+  }
+
+  var mixedRectangle = MixedRectangle()
+  print(mixedRectangle.height)
+  // Prints "1"
+
+  mixedRectangle.height = 20
+  print(mixedRectangle.height)
+  // Prints "12"
+  ```
+* Projecting a Value From a Property Wrapper
