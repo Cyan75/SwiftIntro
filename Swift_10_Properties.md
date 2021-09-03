@@ -353,3 +353,39 @@ stepCounter.totalSteps = 896
   // Prints "12"
   ```
 * Projecting a Value From a Property Wrapper
+  * In addition to the wrapped value, a property wrapper can expose additional functionality by defining a projected value
+  * the name of the projected value is the same as the wrapped value
+  ```swift
+  @propertyWrapper
+  struct SmallNumber {
+      private var number = 0
+      var projectedValue = false
+      var wrappedValue: Int {
+          get { return number }
+          set {
+              if newValue > 12 {
+                  number = 12
+                  projectedValue = true
+              } else {
+                  number = newValue
+                  projectedValue = false
+              }
+          }
+      }
+  }
+  struct SomeStructure {
+      @SmallNumber var someNumber: Int
+  }
+  var someStructure = SomeStructure()
+
+  someStructure.someNumber = 4
+  print(someStructure.$someNumber)
+  // Prints "false"
+
+  someStructure.someNumber = 55
+  print(someStructure.$someNumber)
+  // Prints "true"
+  ```
+  * a property wrapper can return a value of any type as its projected value
+  * a wrapper that needs to expose more information can return an instance of some other data type, it can return self to expose the instance of the wrapper as its projected value
+  * 
