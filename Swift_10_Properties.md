@@ -477,8 +477,68 @@ stepCounter.totalSteps = 896
       }
   }
   ```
-  * the 
+  * you can also define read-write computed typw properties with the same syntax as for computed instance properties
 
+* Querying and Setting Type Proerties
+  * type properties are queried and set with dot syntax
+  * type properties are queried and set on the type not on an instance of that type
+  ```swift
+  print(SomeStructure.storedTypeProperty)
+  // Prints "Some value."
+  SomeStructure.storedTypeProperty = "Another value."
+  print(SomeStructure.storedTypeProperty)
+  // Prints "Another value."
+  print(SomeEnumeration.computedTypeProperty)
+  // Prints "6"
+  print(SomeClass.computedTypeProperty)
+  // Prints "27"
+  ```
+  ```swift
+  struct AudioChannel {
+    static let thresholdLevel = 10
+    static var maxInputLevelForAllChannels = 0
+    var currentLevel: Int = 0 {
+        didSet {
+            if currentLevel > AudioChannel.thresholdLevel {
+                // cap the new audio level to the threshold level
+                currentLevel = AudioChannel.thresholdLevel
+            }
+            if currentLevel > AudioChannel.maxInputLevelForAllChannels {
+                // store this as the new overall maximum input level
+                AudioChannel.maxInputLevelForAllChannels = currentLevel
+            }
+        }
+    }
+  }
+  ```
+  * `AudioChannel` defines two stored type properties
+    * `thresholdLevel` defines the maximum threshold value an audio level can take. 
+      * constant value of `10` for all `AudioChannel` instances
+    * `maxInputLevelForAllChannels` is a variable stored property that keeps track of the maximum input value that has been received by any `AudioChannel` instanve 
+  * `currentLevel` property has a `didSet` property observer to check the value of `currentLevel` whenever it is set.
+    * If the new value of `currentLevel` is greater than the allowed `thresholdLevel`, the property observer caps `currentLevel` to `thresholdLevel`
+    * If the new value of `currentLevel` (after any capping) is higher than any value previously received by any `AudioChannel` instance, the property observer stores the new `currentLevel` value in the `maxInputLevelForAllChannels` type property.
+  * you can use `AudioChannel` to create two new audio channels
+  ```swift
+  var leftChannel = AudioChannel()
+  var rightChannel = AudioChannel()
+  ``` 
+  * set `currentLevel` to 7, `maxInputLevelForAllChannels` type property is updated to equal 7
+  ```swift
+  leftChannel.currentLevel = 7
+  print(leftChannel.currentLevel)
+  // Prints "7"
+  print(AudioChannel.maxInputLevelForAllChannels)
+  // Prints "7"
+  ```
+  * set the `currentLevel` of the right channel to 11, the right channel’s `currentLevel` property is capped to the maximum value of 10, and the `maxInputLevelForAllChannels` type property is updated to equal 10
+  ```swift
+  rightChannel.currentLevel = 11
+  print(rightChannel.currentLevel)
+  // Prints "10"
+  print(AudioChannel.maxInputLevelForAllChannels)
+  // Prints "10"
+  ```
 
 
 
