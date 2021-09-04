@@ -387,5 +387,104 @@ stepCounter.totalSteps = 896
   // Prints "true"
   ```
   * a property wrapper can return a value of any type as its projected value
-  * a wrapper that needs to expose more information can return an instance of some other data type, it can return self to expose the instance of the wrapper as its projected value
-  * 
+  * a wrapper that needs to expose more information can return an instance of some other data type, it can return `self` to expose the instance of the wrapper as its projected value
+  * `self.` can be omitted when accessing a projected value from code that is part of type
+    * like a property getter or an instance method
+  ```swift
+  enum Size {
+    case small, large
+  }
+
+  struct SizedRectangle {
+      @SmallNumber var height: Int
+      @SmallNumber var width: Int
+
+      mutating func resize(to size: Size) -> Bool {
+          switch size {
+          case .small:
+              height = 10
+              width = 20
+          case .large:
+              height = 100
+              width = 100
+          }
+          return $height || $width
+      }
+  }
+  ```
+  * property wrapper syntx is just syntactic sugar for a property with a getter and a setter
+
+
+## 5.Global and Local Variables
+> * Global variables are variables that are defined outside of any function, method, closure or type context
+> * Local variables are variables that are defined within a function, method, or closure context
+  * Stored variables provide storage for a value of a certain type and allow that value to be set and retrieved
+  * Computed variables calculate their value, rather than storing it, and they are written in the same way as computed properties
+  * global constants and variables are always computed lazily
+    * Yet, they do not need to bbe marked with `lazy`
+  * local constants and variables are never computed lazily
+  * applying a property wrapper to a local stored variable but not to a global variable or computed variable
+  ```swift
+  func someFunction() {
+    @SmallNumber var myNumber: Int = 0
+
+    myNumber = 10
+    // now myNumber is 10
+
+    myNumber = 24
+    // now myNumber is 12
+  }
+  ```
+
+## 6.Type Properties
+* Instance Properties vs Type Properties
+  * Instance Properties : properties that belong to an instance of a particular type
+    * Whenever a new instance is created, it has its own set of property values, separate from any other instance
+  * Type Properties : properties that bbelong to the type itself
+    * there will only ever be one copy of these properties
+    * useful for defining values that are universal to all instances of a particular type
+      * C's `static constant` : a constant property that all instances can use
+      * C's `static` : a variable property that stores a value that is global to all instances of that type 
+    * stored type properties must always have default value, unlike stored instance properties
+      * the type istelf does not have an initialiser that can assign a value to a stored property at initialisation time
+      * stored type properties are lazily initialised on their first access
+      * they are guaranteed to be initialised only once, even when accessed by multiple threads simultaneously. 
+      * they do not need to be marked with `lazy`
+* Type Property syntax `static`
+  * Swift type properties are written as part of the type's definition, within the type's outer curly braces
+  * each type property is explicitly scoped to the type it supports
+  * for computed type properties for class type, `class` can be used to allow subclasses to override the superclass's implementation
+  ```swift
+  struct SomeStructure {
+    static var storedTypeProperty = "Some value."
+    static var computedTypeProperty: Int {
+        return 1
+    }
+  }
+  enum SomeEnumeration {
+      static var storedTypeProperty = "Some value."
+      static var computedTypeProperty: Int {
+          return 6
+      }
+  }
+  class SomeClass {
+      static var storedTypeProperty = "Some value."
+      static var computedTypeProperty: Int {
+          return 27
+      }
+      class var overrideableComputedTypeProperty: Int {
+          return 107
+      }
+  }
+  ```
+  * the 
+
+
+
+
+
+
+
+
+
+
