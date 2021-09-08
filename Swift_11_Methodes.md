@@ -106,4 +106,79 @@
   // ovenLight is now equal to .off
   ```
 
-## 2. Type Methods
+## 2. Type Methods `static` or `class`
+* methods that are called on the type itself
+  * called with dot syntax
+  * call type methods on the type not on an instance of that type 
+  ```swift
+  class SomeClass {
+    class func someTypeMethod() {
+        // type method implementation goes here
+    }
+  }
+  SomeClass.someTypeMethod()
+  ```
+    * `self` refers to the type itself, rather than an instance of that type
+  
+  * disambiguation between type properties and type method parameters
+  * (Generalisation) any unquantified method and property names used within the body of a type method will refer to other type-level methods and properties
+  * a type method can call another type method with the other method’s name, without needing to prefix it with the type name
+  * type methods on structures and enumerations can access type properties by using the type property’s name without a type name prefix
+  ```swift
+  struct LevelTracker {
+    static var highestUnlockedLevel = 1
+    var currentLevel = 1
+
+    static func unlock(_ level: Int) {
+        if level > highestUnlockedLevel { highestUnlockedLevel = level }
+    }
+
+    static func isUnlocked(_ level: Int) -> Bool {
+        return level <= highestUnlockedLevel
+    }
+
+    @discardableResult
+    mutating func advance(to level: Int) -> Bool {
+        if LevelTracker.isUnlocked(level) {
+            currentLevel = level
+            return true
+        } else {
+            return false
+        }
+    }
+  }
+  ```
+  * `LevelTracker` tracks an individual player's progress through the game
+    * it uses an instance property called `currentLevel` to track the level that a player is currently playing
+  * `LevelTracker` structure is used with the `Player` class, shown below to track and update the progress of an individual player
+  ```swift
+  class Player {
+    var tracker = LevelTracker()
+    let playerName: String
+    func complete(level: Int) {
+        LevelTracker.unlock(level + 1)
+        tracker.advance(to: level + 1)
+    }
+    init(name: String) {
+        playerName = name
+    }
+  }
+  ```
+  * `Player` creates a new instance of `LevelTracker` to track that player's progress
+  * another instance of `Player` can be created
+  ```swift
+  var player = Player(name: "Argyrios")
+  player.complete(level: 1)
+  print("highest unlocked level is now \(LevelTracker.highestUnlockedLevel)")
+  // Prints "highest unlocked level is now 2"
+  ```
+  * the new player's level is locked
+  ```swift
+  player = Player(name: "Beto")
+  if player.tracker.advance(to: 6) {
+      print("player is now on level 6")
+  } else {
+      print("level 6 hasn't yet been unlocked")
+  }
+  // Prints "level 6 hasn't yet been unlocked"
+  ```
