@@ -89,4 +89,66 @@ print("Tandem: \(tandem.description)")
   // Prints "Choo Choo"
   ```
 * Overriding Properties
-  * You can override an inherited instance or type property to provide your own custom getter and setter for that property, or to add property observers to enable the overriding property to observe when the underlying property value changes
+  * You can override an inherited instance or type property
+    * custom getter and setter for that property 
+    * add property observers to enable the overriding property to observe when the underlying property value changes
+
+## 4. Overriding Property Getters and Setters
+* a inherited stored or computed property can have a custom getter and setter
+* a subclass knows only that the inherited property has certain name and type
+* both the name and the type of the overriden property must be provided
+* if a setter is provided as part of a property override, there must be also a getter for that override
+* use `super` in case of not modifying the inherited property's value
+
+```swift
+class Car: Vehicle {
+    var gear = 1
+    override var description: String {
+        return super.description + " in gear \(gear)"
+    }
+}
+```
+* `super.description` 
+  * starts the override of the `description` property
+  * `description` of `Vehicle` is returned
+* `description` of another instance of `Vehecle` returns its own `gear` and `currentSpeed` properties
+```swift
+let car = Car()
+car.currentSpeed = 25.0
+car.gear = 3
+print("Car: \(car.description)")
+// Car: traveling at 25.0 miles per hour in gear 3
+```
+## 5. Overriding Property Observers
+* property observers to an inherited property can be overriden
+  * this notifies when the value of an inherited property changes
+* inherited constant stored properties or inherited read-only computed properties cannot have any property observers
+  * the value of these properties cannot be set 
+  * it is not appropriate to provide `willSet` or `didSet` implementation as part of an override
+* providing both an overriding setter and an overriding property observer for the same property is impossible
+  * to observe changes of a property's value where there a custom setter for that property is already provided, simply observe any value changes from within the custom setter
+
+```swift
+class AutomaticCar: Car {
+    override var currentSpeed: Double {
+        didSet {
+            gear = Int(currentSpeed / 10.0) + 1
+        }
+    }
+}
+```
+* `AutomaticCar` is a subclass of `Car`
+  * it automatically selects an appropriate gear to use based on the current speed
+* Whenever `currentSpeed` property of an `AutomaticCar` instance is set, the property’s `didSet` observer sets the instance’s `gear` property to an appropriate choice of `gear` for the new speed
+* Specifically the property observer chooses a gear that's the new `currentSpeed` value divided by `10`, rounded down to the nearest integer, plus `1`
+```swift
+let automatic = AutomaticCar()
+automatic.currentSpeed = 35.0
+print("AutomaticCar: \(automatic.description)")
+// AutomaticCar: traveling at 35.0 miles per hour in gear 4
+```
+
+## 6. Preventing Overrides `final`
+* `final` modifier before the method, property or subscript's introducer keyword(such as `final var`, `final func`, `final class func`, and `final subscript`)
+* any attempt to override a final method, property, or subscript in a subclass is reported as a compile-time error
+* marking an entire class as final `final class` : any attempt to subclass a final class is reported as a compile-time error
