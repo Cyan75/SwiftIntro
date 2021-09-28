@@ -196,3 +196,21 @@ print(zeroByZero.width, zeroByZero.height)
 * any properties that have default values can be omitted
 
 ## 4. Initialiser Delegation for Value Types
+> * initialiser delegation : an initialiser calling other initialiser to perform part of an instance's initialisation
+* initialiser delegation by different types
+  * Value types(structures, enumerations)
+    * delegate to another initialiser that they provide themselves
+    * use `self.init` to refer to other initialiser from the same value type when writing an initialiser
+    * when a custom initialiser for a value type is defined, accessing to the default initialiser will not be available
+      * use extensions to make custom value types to be initialisable with the default, memberwise, and custom initialisers
+  * Class
+    * classes shoud ensure that all stored properties they inherit are assigned a suitable value during initialisation
+```swift
+struct Size {
+    var width = 0.0, height = 0.0
+}
+struct Point {
+    var x = 0.0, y = 0.0
+}
+
+```
