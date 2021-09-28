@@ -158,3 +158,41 @@ beetsQuestion.response = "I also like beets. (But not with cheese.)"
 * Even though `text` is now a constant, it can still be set within the class’s initializer
 
 ## 3. Default Initialisers
+* default initialiser provides default values for all of its properties
+  * does not provides at least one initialiser itself
+  * it creates a new instance with all of its properties set to their default values
+  ```swift
+  class ShoppingListItem {
+    var name: String?
+    var quantity = 1
+    var purchased = false
+  }
+  var item = ShoppingListItem()
+  ```
+  * `ShoppingListItem` is a base class with no superclass and all of which properties have default values
+    * it automatically gains a default initialiser implementation creating a new instance with all of its properties set to their default values
+    * `ShoppingListItem()` is the default initialiser 
+* ### Memberwise Initialisers for Structure Types
+* a structure receives a memberwise initialiser even if it has stored properties that do not have default values
+* The memberwise initializer is a shorthand way to initialize the member properties of new structure instances
+  * Initial values for the properties of the new instance can be passed to the memberwise initializer by name
+```swift
+struct Size {
+    var width = 0.0, height = 0.0
+}
+let twoByTwo = Size(width: 2.0, height: 2.0)
+```
+* The Size structure automatically receives an init(width:height:) memberwise initializer
+  * a new `Size` instance can be used
+```swift
+let zeroByTwo = Size(height: 2.0)
+print(zeroByTwo.width, zeroByTwo.height)
+// Prints "0.0 2.0"
+
+let zeroByZero = Size()
+print(zeroByZero.width, zeroByZero.height)
+// Prints "0.0 0.0"
+```
+* any properties that have default values can be omitted
+
+## 4. Initialiser Delegation for Value Types
