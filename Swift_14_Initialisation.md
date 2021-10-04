@@ -205,12 +205,55 @@ print(zeroByZero.width, zeroByZero.height)
       * use extensions to make custom value types to be initialisable with the default, memberwise, and custom initialisers
   * Class
     * classes shoud ensure that all stored properties they inherit are assigned a suitable value during initialisation
-```swift
-struct Size {
-    var width = 0.0, height = 0.0
-}
-struct Point {
-    var x = 0.0, y = 0.0
-}
+  ```swift
+  struct Size {
+      var width = 0.0, height = 0.0
+  }
+  struct Point {
+      var x = 0.0, y = 0.0
+  }
+  ```
+    * initialising `Rect` in three ways : in case that the struct would have received if it did not have its own custom initialisers
+      1. use its default zero-initialised `origin` and `size` property values
+      2. provide a specific origin point and size
+      3. provide a specific centre point and size
+    ```swift
+    struct Rect {
+    var origin = Point()
+    var size = Size()
+    init() {}
+    init(origin: Point, size: Size) {
+        self.origin = origin
+        self.size = size
+    }
+    init(center: Point, size: Size) {
+        let originX = center.x - (size.width / 2)
+        let originY = center.y - (size.height / 2)
+        self.init(origin: Point(x: originX, y: originY), size: size)
+    }
+  }
+  ```
+  * `init() {}` is functionally the same as the default initialiser 
+    * calling this returns a `Rect` instance with the default `origin` and `size` of `Point(x: 0.0, y: 0.0)` and `Size(width: 0.0, height: 0.0)` from their property definitions
+    ```swift
+    let basicRect = Rect()
+    // basicRect's origin is (0.0, 0.0) and its size is (0.0, 0.0)
+    ```
+  * `init(origin:size:)` is functionally the same as the memberwise initialiser
+    * this initialiser simply assigns the `origin` and `size` argument values to the appropriate stored properties
+    ```swift
+    let originRect = Rect(origin: Point(x: 2.0, y: 2.0),
+                      size: Size(width: 5.0, height: 5.0))
+    // originRect's origin is (2.0, 2.0) and its size is (5.0, 5.0)
+    ```
+  * `init(center:size)` starts by calculating an appropriate origin point based on a `center` point and a `size` 
+    * it calls(or delegates) to the `init(origin:size:)` initialiser, which stores the new origin and size values in the appropriate properties
+    ```swift
+    let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
+                      size: Size(width: 3.0, height: 3.0))
+    // centerRect's origin is (2.5, 2.5) and its size is (3.0, 3.0)
+    ```
+    * it is convenient fot the `init(center:size:)` initialiser to take advantage of an existing initialiser that aleady provides exactly that functionality
 
-```
+## 5. Class Inheritance and Initialisation    
+
