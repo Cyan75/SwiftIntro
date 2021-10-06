@@ -256,4 +256,58 @@ print(zeroByZero.width, zeroByZero.height)
     * it is convenient fot the `init(center:size:)` initialiser to take advantage of an existing initialiser that aleady provides exactly that functionality
 
 ## 5. Class Inheritance and Initialisation    
+* ### Designated Initialisers and Convenience Initialisers
+  * Designated Initialisers
+    * fully initialise all properties introduced by that class 
+    * calls an appropriate subclass initialiser to continue the initialisation process up the superclass chain
+    * Every class must have at least one designated initialiser
+    * Automatic initialiser inheritance : a subclass is inheriting one or more designated initialisers from a superclass
+  * Convenience Initialisers
+    * call a designated initialiser from the same class as the convenience initialiser with some of the designated initialiser's parameters set to default values
+    * create an instance of that class for a specific use case or input value type
+    * create whenever a shortcut to a common initialisation pattern to save time or to make initialisation of the class cleaner in intent
+    * not always required 
+* ### Syntax for Designated and Convenience Initialisers
+  * Designated Initialisers
+  ```swift
+  init(parameters) {
+    statements
+  }
+  ```
+  * Convenience Initialisers
+  ```swift
+  convenience init(parameters) {
+      statements
+  }
+  ```
+* ### Initialiser Delegation for Class Type
+  1. A designated initializer must call a designated initializer from its immediate superclass
+  2. A convenience initializer must call another initializer from the same class
+  3. A convenience initializer must ultimately call a designated initializer
+  > * Designated initializers must always delegate up
+  > * Convenience initializers must always delegate across
 
+* ### Two-Phase Initialisation
+  > * for a safe initialisation 
+  > * for giving complete flexibilty to each class in a class hierarchy
+  * each stored property is assigned an initial value by the class that introduced it
+  *  each class is given the opportunity to customise its stored properties further before the new instance is considered ready for use
+  * #### safety checks by Swift compiler
+    1. A designated initializer must ensure that all of the properties introduced by its class are initialized before it delegates up to a superclass initializer
+    2. A designated initializer must delegate up to a superclass initializer before assigning a value to an inherited property
+      * If it doesn’t, the new value the designated initializer assigns will be overwritten by the superclass as part of its own initialization
+    3. A convenience initializer must delegate to another initializer before assigning a value to any property (including properties defined by the same class)
+      * If it doesn’t, the new value the convenience initializer assigns will be overwritten by its own class’s designated initializer
+    4. An initializer can’t call any instance methods, read the values of any instance properties, or refer to self as a value until after the first phase of initialization is complete
+  * #### Phase1
+    * A designated or convenience initializer is called on a class
+    * Memory for a new instance of that class is allocated. The memory isn’t yet initialized
+    * A designated initializer for that class confirms that all stored properties introduced by that class have a value. The memory for these stored properties is now initialized
+    * The designated initializer hands off to a superclass initializer to perform the same task for its own stored properties.
+    * This continues up the class inheritance chain until the top of the chain is reached
+    * Once the top of the chain is reached, and the final class in the chain has ensured that all of its stored properties have a value, the instance’s memory is considered to be fully initialized, and phase 1 is complete
+  * #### Phase2
+    * Working back down from the top of the chain, each designated initializer in the chain has the option to customize the instance further. Initializers are now able to access self and can modify its properties, call its instance methods, and so on
+    * Finally, any convenience initializers in the chain have the option to customize the instance and to work with self.
+
+* ### Initialiser Inheritance and Overriding
