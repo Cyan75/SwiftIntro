@@ -311,3 +311,7 @@ print(zeroByZero.width, zeroByZero.height)
     * Finally, any convenience initializers in the chain have the option to customize the instance and to work with self.
 
 * ### Initialiser Inheritance and Overriding
+  * Swift subclasses do not inherit their superclass initialisers by default
+  * use `override` before a subclass's initialiser definition that matches a superclass defignated initialiser
+    * Swift checks that the superclass has a matching designated initialiser to be overriden 
+    * Swift validates that the parameters for the overriding initialiser have been specified as intended
