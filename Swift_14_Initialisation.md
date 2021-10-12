@@ -315,3 +315,53 @@ print(zeroByZero.width, zeroByZero.height)
   * use `override` before a subclass's initialiser definition that matches a superclass defignated initialiser
     * Swift checks that the superclass has a matching designated initialiser to be overriden 
     * Swift validates that the parameters for the overriding initialiser have been specified as intended
+  * when providing a matching implementation of a supercalss convenience initialiser, `override` cannot be used
+    * a subclass initialiser that matches a superclass convenience initialiser can never call the superclass initialiser
+  ```swift
+  class Vehicle {
+    var numberOfWheels = 0
+    var description: String {
+        return "\(numberOfWheels) wheel(s)"
+    }
+  }
+  ```
+  ```swift
+  class Bicycle: Vehicle {
+    override init() {
+        super.init()
+        numberOfWheels = 2
+    }
+  }
+  ``` 
+  * `override init()` : a custom designated initialiser which matches a designated initialiser from the supercalss of `Bicycle`
+  * `super.init()` : calls the default initialiser for `Bicycle`'s superclass
+    * inherited property `numberOfWheels` is initialised by `Vehicle` before `Bicycle` has the opportunity to modify the property
+  ```swift
+  let bicycle = Bicycle()
+  print("Bicycle: \(bicycle.description)")
+  // Bicycle: 2 wheel(s)
+  ``` 
+  * `super.ini()` can be omitted if...
+    * a subclass initialiser performs no customisation in phase 2 of the initialisation process and, 
+    * the superclass has a zero-argument designated initialiser
+  ```swift
+  class Hoverboard: Vehicle {
+    var color: String
+    init(color: String) {
+        self.color = color
+        // super.init() implicitly called here
+    }
+    override var description: String {
+        return "\(super.description) in a beautiful \(color)"
+    }
+  }
+  ``` 
+  ```swift
+  let hoverboard = Hoverboard(color: "silver")
+  print("Hoverboard: \(hoverboard.description)")
+  // Hoverboard: 0 wheel(s) in a beautiful silver
+  ```
+  * Subclasses can modify inherited variable properties during initialization, but can’t modify inherited constant properties
+* ### Automatic Initialiser Inheritance
+
+
