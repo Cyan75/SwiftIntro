@@ -363,5 +363,8 @@ print(zeroByZero.width, zeroByZero.height)
   ```
   * Subclasses can modify inherited variable properties during initialization, but can’t modify inherited constant properties
 * ### Automatic Initialiser Inheritance
-
+  1. a subclass automatically inherits all of its superclass designated initialisers when the subclass does not define any designated initialisers 
+  2. a subclass inherits all of the superclass convenience initialisers when the subclass provides an implementation of all of its superclass designated initialisers
+  * these rules apply even if the subclass adds further convenience initialisers
+* ### Designated and Convenience Initialisers in Action 
 
