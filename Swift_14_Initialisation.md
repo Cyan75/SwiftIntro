@@ -367,4 +367,103 @@ print(zeroByZero.width, zeroByZero.height)
   2. a subclass inherits all of the superclass convenience initialisers when the subclass provides an implementation of all of its superclass designated initialisers
   * these rules apply even if the subclass adds further convenience initialisers
 * ### Designated and Convenience Initialisers in Action 
+  > * designated initializers, convenience initializers, and automatic initializer inheritance in action
+  ```swift
+  class Food {
+    var name: String
+    init(name: String) {
+        self.name = name
+    }
+    convenience init() {
+        self.init(name: "[Unnamed]")
+    }
+  }
+  ```
+    * `Food`  
+    `init()` ⟶ `init(name)`
+    * classes do not have a default memberwise initialiser
+      * `Food` provides a designated initialiser taking `name`
+        * it can be used to create a new `Food` instance with a specified name
+      ```swift
+      let namedMeat = Food(name: "Bacon")
+      // namedMeat's name is "Bacon"
+      ```
+      * `init(name : String)` : designated initialiser
+        * it ensures that all stored properties of a new `Food` instance are fully initialised
+      * `init()` : convenience initialiser
+        * it provides a default placeholder name for a new food by delegating across to the `Food` class's `init(name : String)` with a `name` value of `[Unnamed]`
+      ```swift
+      let mysteryMeat = Food()
+      // mysteryMeat's name is "[Unnamed]"
+      ```
+  ```swift
+  class RecipeIngredient: Food {
+    var quantity: Int
+    init(name: String, quantity: Int) {
+        self.quantity = quantity
+        super.init(name: name)
+    }
+    override convenience init(name: String) {
+        self.init(name: name, quantity: 1)
+    }
+  }
+  ```
+  * `Food`  
+  `init()` ⟶ `init(name)`
+  * `RecipeIngredient`  
+  `init()` ⟶ `init(name)` ⟶ `init(name, quality)`  
+  inherited ⟶ convenience ⟶ designated
+    * `init(name, quality)`
+      * it is a single designated initialiser
+      * it assigns the passed `quantity` argument to the `quantity` property
+      * it delegates up to `init(name : String)` of the `Food` : tow -phase initialisation
+    * `init(name : String)` 
+      * it is a convenience initialiser to create a `RecipeIngredient` instance by `name` alone
+      * it assumes a quantity of `1` for any `RecipeIngredient` instance
+      * it overrides `init(name String)` of `Food`
+  * `RecipeIngredient` provides an implementation of all of its superclass's designated initialisers
+    * it automatically inherits all of its superclass's convenience initialisers too
+  ```swift
+  let oneMysteryItem = RecipeIngredient()
+  let oneBacon = RecipeIngredient(name: "Bacon")
+  let sixEggs = RecipeIngredient(name: "Eggs", quantity: 6)
+  ``` 
+  * `ShoppingListItem` class models a recipe ingredient as it appears in a shopping list
+    * it does not define any initialisers itself
+      * it automativally inherits all of the designated and convenience initialisers from its superclass
+  ```swift
+  class ShoppingListItem: RecipeIngredient {
+    var purchased = false
+    var description: String {
+        var output = "\(quantity) x \(name)"
+        output += purchased ? " ✔" : " ✘"
+        return output
+    }
+  }
+  ```
+    * `Food`  
+    `init()` ⟶ `init(name)`
+    * `RecipeIngredient` : `Food`  
+    `init()` ⟶ `init(name)` ⟶ `init(name, quality)`  
+    inherited ⟶ convenience ⟶ designated
+    * `ShoppingList` : `RecipeIngredient`
+    inherited ⟶ convenience ⟶ designated
+  * all three initialisers for `ShoppingListItem` instances
+  ```swift
+  var breakfastList = [
+    ShoppingListItem(),
+    ShoppingListItem(name: "Bacon"),
+    ShoppingListItem(name: "Eggs", quantity: 6),
+  ]
+  breakfastList[0].name = "Orange juice"
+  breakfastList[0].purchased = true
+  for item in breakfastList {
+      print(item.description)
+  }
+  // 1 x Orange juice ✔
+  // 1 x Bacon ✘
+  // 6 x Eggs ✘
+  ```
+    * after the array is created, the name of the `ShoppingListItem` at the start of the array is changed from `[Unnamed]` to `Orange juice`
 
+## 6. Failable Initialisers
