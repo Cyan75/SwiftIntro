@@ -380,7 +380,8 @@ print(zeroByZero.width, zeroByZero.height)
   }
   ```
     * `Food`  
-    `init()` ⟶ `init(name)`
+    `init()` ⟶ `init(name)`  
+    (convenience ⟶ designated)
     * classes do not have a default memberwise initialiser
       * `Food` provides a designated initialiser taking `name`
         * it can be used to create a new `Food` instance with a specified name
@@ -412,7 +413,7 @@ print(zeroByZero.width, zeroByZero.height)
   `init()` ⟶ `init(name)`
   * `RecipeIngredient`  
   `init()` ⟶ `init(name)` ⟶ `init(name, quality)`  
-  inherited ⟶ convenience ⟶ designated
+  (inherited ⟶ convenience ⟶ designated)
     * `init(name, quality)`
       * it is a single designated initialiser
       * it assigns the passed `quantity` argument to the `quantity` property
@@ -445,9 +446,9 @@ print(zeroByZero.width, zeroByZero.height)
     `init()` ⟶ `init(name)`
     * `RecipeIngredient` : `Food`  
     `init()` ⟶ `init(name)` ⟶ `init(name, quality)`  
-    inherited ⟶ convenience ⟶ designated
-    * `ShoppingList` : `RecipeIngredient`
-    inherited ⟶ convenience ⟶ designated
+    (inherited ⟶ convenience ⟶ designated)
+    * `ShoppingList` : `RecipeIngredient`  
+    (inherited ⟶ convenience ⟶ designated)
   * all three initialisers for `ShoppingListItem` instances
   ```swift
   var breakfastList = [
@@ -466,4 +467,156 @@ print(zeroByZero.width, zeroByZero.height)
   ```
     * after the array is created, the name of the `ShoppingListItem` at the start of the array is changed from `[Unnamed]` to `Orange juice`
 
-## 6. Failable Initialisers
+## 6. Failable Initialisers `!`
+> * intended failure of initialisation
+* a failable and a nonfailable initializer with the same parameter types and names cannot be defined
+* A failable initializer creates an optional value of the type it initializes
+  * ensure that `self` is fully and correctly initialised by the time that initialisation ends
+  * initialisers do not return a value even though `return nil` is used to trigger an initialisation failure 
+```swift
+let wholeNumber: Double = 12345.0
+let pi = 3.14159
+
+if let valueMaintained = Int(exactly: wholeNumber) {
+    print("\(wholeNumber) conversion to Int maintains value of \(valueMaintained)")
+}
+// Prints "12345.0 conversion to Int maintains value of 12345"
+
+let valueChanged = Int(exactly: pi)
+// valueChanged is of type Int?, not Int
+
+if valueChanged == nil {
+    print("\(pi) conversion to Int doesn't maintain value")
+}
+// Prints "3.14159 conversion to Int doesn't maintain value"
+```
+* use `init(exactly)` to ensure conversion between numeric types maintains the value exactly
+  * if the type conversion cannot maintain the value, the initialiser fails
+```swift
+struct Animal {
+    let species: String
+    init?(species: String) {
+        if species.isEmpty { return nil }
+        self.species = species
+    }
+}
+``` 
+  * successful initialisation
+  ```swift
+  let someCreature = Animal(species: "Giraffe")
+  // someCreature is of type Animal?, not Animal
+
+  if let giraffe = someCreature {
+      print("An animal was initialized with a species of \(giraffe.species)")
+  }
+  // Prints "An animal was initialized with a species of Giraffe"
+  ```
+  * initialisation fails : an empty string for `species`
+  ```swift
+  let anonymousCreature = Animal(species: "")
+  // anonymousCreature is of type Animal?, not Animal
+
+  if anonymousCreature == nil {
+      print("The anonymous creature couldn't be initialized")
+  }
+  // Prints "The anonymous creature couldn't be initialized"
+  ```
+* ### Failable Initialisers for Enumerations
+  * a failable initialiser can fail if the provided parameters do not match an appropriate enumeration case
+  ```swift
+  enum TemperatureUnit {
+    case kelvin, celsius, fahrenheit
+    init?(symbol: Character) {
+        switch symbol {
+        case "K":
+            self = .kelvin
+        case "C":
+            self = .celsius
+        case "F":
+            self = .fahrenheit
+        default:
+            return nil
+        }
+    }
+  }
+  ```
+  * choose an appropriate enumeration case for the three possible states
+  * the initialisation fails if the parameter does not match one of three states
+  ```swift
+  let fahrenheitUnit = TemperatureUnit(symbol: "F")
+  if fahrenheitUnit != nil {
+      print("This is a defined temperature unit, so initialization succeeded.")
+  }
+  // Prints "This is a defined temperature unit, so initialization succeeded."
+
+  let unknownUnit = TemperatureUnit(symbol: "X")
+  if unknownUnit == nil {
+      print("This isn't a defined temperature unit, so initialization failed.")
+  }
+  // Prints "This isn't a defined temperature unit, so initialization failed."
+  ```
+* ### Failable Initialisers for Enumerations with Raw Values
+  * Enumerations with raw values automatically receives a failable initialiser `init?(rawValue:)` 
+  * `init?(rawValue:)` takes a parameter called `rawValue` of the appropriate raw-value type and selects a matching enumeration case if one is found, or triggers an initialisation failure if no matching value exists
+  ```swift
+  enum TemperatureUnit: Character {
+    case kelvin = "K", celsius = "C", fahrenheit = "F"
+  }
+
+  let fahrenheitUnit = TemperatureUnit(rawValue: "F")
+  if fahrenheitUnit != nil {
+      print("This is a defined temperature unit, so initialization succeeded.")
+  }
+  // Prints "This is a defined temperature unit, so initialization succeeded."
+
+  let unknownUnit = TemperatureUnit(rawValue: "X")
+  if unknownUnit == nil {
+      print("This isn't a defined temperature unit, so initialization failed.")
+  }
+  // Prints "This isn't a defined temperature unit, so initialization failed."
+  ```
+* ### Propagation of Initialisation Failure
+> * a failable initialiser of a class, structure, or enumeration can delegate across to another failable initialiser from the same class, structure, or enumeration
+> * a subclass failable initialiser can delegate up to a superclass failable initialiser
+  * once a delegation to another initialiser causes fail, the entire process fails immediately, no further initialisation code is executed
+  * A failable initializer can also delegate to a nonfailable initializer
+    * a potential failure state is needed to an existing initialization process that doesn’t otherwise fail
+  ```swift
+  class Product {
+    let name: String
+    init?(name: String) {
+        if name.isEmpty { return nil }
+        self.name = name
+    }
+  }
+
+  class CartItem: Product {
+      let quantity: Int
+      init?(name: String, quantity: Int) {
+          if quantity < 1 { return nil }
+          self.quantity = quantity
+          super.init(name: name)
+      }
+  }
+  ``` 
+  * `CartItem` validates that it has received a `quantity` value of 1 or more
+    * invalid `quantity` leads the whole initialisation process to fail
+    * successful initialisation
+    ```swift
+    if let zeroShirts = CartItem(name: "shirt", quantity: 0) {
+        print("Item: \(zeroShirts.name), quantity: \(zeroShirts.quantity)")
+    } else {
+        print("Unable to initialize zero shirts")
+    }
+    // Prints "Unable to initialize zero shirts"
+    ```
+    * initialisation failure with an empty `name`
+    ```swift
+    if let oneUnnamed = CartItem(name: "", quantity: 1) {
+    print("Item: \(oneUnnamed.name), quantity: \(oneUnnamed.quantity)")
+    } else {
+        print("Unable to initialize one unnamed product")
+    }
+    // Prints "Unable to initialize one unnamed product"
+    ```
+* ### Overriding a Failable Initialiser
