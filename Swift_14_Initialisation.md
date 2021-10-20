@@ -620,3 +620,56 @@ struct Animal {
     // Prints "Unable to initialize one unnamed product"
     ```
 * ### Overriding a Failable Initialiser
+  * defining a subclass for which initialization cannot fail, even though initialization of the superclass is allowed to fail
+    * failable initialiser for the superclass, nonfailable initialiser for the subclass
+    * force-unwrap the result of the failable superclass initialiser to delegate up to the superclass
+  ```swift
+  class Document {
+    var name: String?
+    // this initializer creates a document with a nil name value
+    init() {}
+    // this initializer creates a document with a nonempty name value
+    init?(name: String) {
+        if name.isEmpty { return nil }
+        self.name = name
+    }
+  }
+  ```
+    * `name` cannot be an empty string
+  ```swift
+  class AutomaticallyNamedDocument: Document {
+    override init() {
+        super.init()
+        self.name = "[Untitled]"
+    }
+    override init(name: String) {
+        super.init()
+        if name.isEmpty {
+            self.name = "[Untitled]"
+        } else {
+            self.name = name
+        }
+    }
+  }
+  ```
+    * initial value of `name` is `[Untitled]` : initialised without a name, or with an empty string `init(name:)`
+    * `AutomaticallyNamedDocument` overrides `init?(name:)` which is failable, with `init(name:)` which is a nonfailable
+  * Force unwrapping
+    * use forced unwrapping to call superclass's failable initialiser as a part of the implementation of a subclass's nonfailable initialiser
+    ```swift
+    class UntitledDocument: Document {
+      override init() {
+        super.init(name: "[Untitled]")!
+      }
+    }
+    ```
+    * `init(name:)` of the superclass were ever called with an empty string as the name, the forced unwrapping operation would result in a runtime error
+      * however, because it’s called with a string constant, you can see that the initializer will not fail, so no runtime error can occur in this case
+* ### The init! Failable Initialiser
+  * `init?` : defines a failable initialiser that creates an optional instance of the appropriate type 
+  * `init!` : defines a failable initialiser that creates an implicitly unwrapped optional instance of the appropriate type
+  * possible uses
+    * delegating `init?` ⟷ `init!`
+    * overriding `init?` ⟷ `init!`
+    * delegating `init` ⟶ `init!`
+      * this will trigger an assertion if `init!` causes initialisation to fail
