@@ -673,3 +673,67 @@ struct Animal {
     * overriding `init?` ⟷ `init!`
     * delegating `init` ⟶ `init!`
       * this will trigger an assertion if `init!` causes initialisation to fail
+
+## 7. Required Initialisers `required`
+* every subclass of the class must implement that initialiser
+```swift
+ class SomeClass {
+    required init() {
+        // initializer implementation goes here
+    }
+}
+```
+* `required` is required before every subclass implementation of a required initialiser
+  * the initialiser requirement applies to further subclasses in the chain
+  * do not use `override` when overriding a required designated initialiser
+```swift
+class SomeSubclass: SomeClass {
+    required init() {
+        // subclass implementation of the required initializer goes here
+    }
+}
+```
+* if the requirement with an inherited initialiser is satisfied, an explicit implementation of a required initialiser is not necessary
+
+## 8. Setting a Default Property Value with a Closure or Function
+* use a closure or global function to provide a customised default value for that property
+* a new instance of the type that the property belongs to is initialised, the closure or function is called, and its return value is assigned as the property's default value
+```swift
+class SomeClass {
+    let someProperty: SomeType = {
+        // create a default value for someProperty inside this closure
+        // someValue must be of the same type as SomeType
+        return someValue
+    }()
+}
+```
+* `()` : Swift executes the closure immediately
+* if `()` is ommitted, the closure itself is assigned to the property, not the return value of the closure
+```swift
+struct Chessboard {
+    let boardColors: [Bool] = {
+        var temporaryBoard: [Bool] = []
+        var isBlack = false
+        for i in 1...8 {
+            for j in 1...8 {
+                temporaryBoard.append(isBlack)
+                isBlack = !isBlack
+            }
+            isBlack = !isBlack
+        }
+        return temporaryBoard
+    }()
+    func squareIsBlackAt(row: Int, column: Int) -> Bool {
+        return boardColors[(row * 8) + column]
+    }
+}
+```
+* Whenever a new Chessboard instance is created, the closure is executed, and the default value of boardColors is calculated and returned
+* the closure calculates and sets the appropriate color for each square on the board in a temporary array called temporaryBoard, and returns this temporary array as the closure’s return value once its setup is complete
+```swift
+let board = Chessboard()
+print(board.squareIsBlackAt(row: 0, column: 1))
+// Prints "true"
+print(board.squareIsBlackAt(row: 7, column: 7))
+// Prints "false"
+```
