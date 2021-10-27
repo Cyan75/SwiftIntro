@@ -2,7 +2,6 @@
 > * optional chaining : querying and calling properties, methods, and subscripts on an optional that might currently be nil
 
 ## 1. Optional Chaining as Alternative to Forced Unwrapping
-
 * forced unwrapping triggers a runtime error when the optional is nil
 * optional chaining fails when the optional is nil
   * the result of an optional chaining call is always an optional value
@@ -51,3 +50,63 @@
   // Prints "John's residence has 1 room(s)."
   ```
 ## 2. Defining Model Classes for Optional Chaining
+* multilevel optional chaining
+```swift
+class Person {
+    var residence: Residence?
+}
+```
+```swift
+class Residence {
+    var rooms: [Room] = []
+    var numberOfRooms: Int {
+        return rooms.count
+    }
+    subscript(i: Int) -> Room {
+        get {
+            return rooms[i]
+        }
+        set {
+            rooms[i] = newValue
+        }
+    }
+    func printNumberOfRooms() {
+        print("The number of rooms is \(numberOfRooms)")
+    }
+    var address: Address?
+}
+```
+* The computed `numberOfRooms` property simply returns the value of the count property from the `rooms` array
+  * `numberOfRooms` property is implemented as a computed property, not a stored property
+    * this version of `Residence` stores an array of `Room` instances
+* `Residence` 
+  * provides a read-write subscript that provides access to the room at the requested index in the `rooms` array 
+  * provides a method called `printNumberOfRooms`, which simply prints the number of rooms in the residence
+  * defines an optional property called `address`, with a type of `Address?`
+```swift
+class Room {
+    let name: String
+    init(name: String) { self.name = name }
+}
+```
+* `Address`
+  * the final class in this model
+  * has three `Strings?` : `buildingName`, `buildingNumber`, and `street`
+  * provides  a method called `buildingIdentifier()`, which has a return type of `String?`
+```swift
+class Address {
+    var buildingName: String?
+    var buildingNumber: String?
+    var street: String?
+    func buildingIdentifier() -> String? {
+        if let buildingNumber = buildingNumber, let street = street {
+            return "\(buildingNumber) \(street)"
+        } else if buildingName != nil {
+            return buildingName
+        } else {
+            return nil
+        }
+    }
+}
+``` 
+## 3. Accessing Properties Through Optional Chaining
