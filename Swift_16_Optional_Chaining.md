@@ -110,3 +110,63 @@ class Address {
 }
 ``` 
 ## 3. Accessing Properties Through Optional Chaining
+* Optional chaining for methods that do not return a value `Void?`
+```swift
+func printNumberOfRooms() {
+    print("The number of rooms is \(numberOfRooms)")
+}
+```
+* the return values are always of an optional type when called through optional chaining
+```swift
+if john.residence?.printNumberOfRooms() != nil {
+    print("It was possible to print the number of rooms.")
+} else {
+    print("It was not possible to print the number of rooms.")
+}
+// Prints "It was not possible to print the number of rooms."
+```
+* to see if the property was set through optional chaining successfully
+```swift
+if (john.residence?.address = someAddress) != nil {
+    print("It was possible to set the address.")
+} else {
+    print("It was not possible to set the address.")
+}
+// Prints "It was not possible to set the address."
+```
+## 4. Accessing Subscripts Through Optional Chaining
+* optional chaining and subscripts
+  * question mark before the subscript's bracket
+  * retrieve and set a value from a subscript on an optional value
+  * check whether that subscript call is successful
+```swift
+if let firstRoomName = john.residence?[0].name {
+    print("The first room name is \(firstRoomName).")
+} else {
+    print("Unable to retrieve the first room name.")
+}
+// Prints "Unable to retrieve the first room name."
+```
+* set a new value through a subscript with optional chaining
+```swift
+john.residence?[0] = Room(name: "Bathroom")
+```
+  * This subscript setting attempt also fails, because residence is currently nil
+* creating and assigning an actual `Residence` instance to `john.residence` with `Residence` subscript and optional chaining of `rooms`
+```swift
+let johnsHouse = Residence()
+johnsHouse.rooms.append(Room(name: "Living Room"))
+johnsHouse.rooms.append(Room(name: "Kitchen"))
+john.residence = johnsHouse
+
+if let firstRoomName = john.residence?[0].name {
+    print("The first room name is \(firstRoomName).")
+} else {
+    print("Unable to retrieve the first room name.")
+}
+// Prints "The first room name is Living Room."
+```
+### Accessing Subscripts of Optional Type
+
+
+
