@@ -167,6 +167,26 @@ if let firstRoomName = john.residence?[0].name {
 // Prints "The first room name is Living Room."
 ```
 ### Accessing Subscripts of Optional Type
-
-
-
+* place a question mark after the subscript's closing bracket to chain on a subscript returning a value of optional type
+```swift
+var testScores = ["Dave": [86, 82, 84], "Bev": [79, 94, 81]]
+testScores["Dave"]?[0] = 91
+testScores["Bev"]?[0] += 1
+testScores["Brian"]?[0] = 72
+// the "Dave" array is now [91, 82, 84] and the "Bev" array is now [80, 94, 81]
+```
+## 5. Linking Multiple Levels of Chaining
+* multiple levels of optional chaining : drill down to properties, methods, and subscripts deeper within a model
+* multiple levels of optional chaining do not add more levels of optionality to the returned value
+  * If the type is not optional, it will become optional because of the optional chaining
+    * If an `Int` is tried to be retrieved through optional chaining, an `Int?` is always returned, no matter how many levels of chaining are used
+  * If the type is already optional, it will not become more optional because of the chaining
+    * If an `Int?` is tried to be retreived through optional chaining, an `Int?` is always returned, no matter how many levels of chaining are used
+```swift
+if let johnsStreet = john.residence?.address?.street {
+    print("John's street name is \(johnsStreet).")
+} else {
+    print("Unable to retrieve the address.")
+}
+// Prints "Unable to retrieve the address."
+```
