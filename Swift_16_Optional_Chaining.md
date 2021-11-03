@@ -190,3 +190,46 @@ if let johnsStreet = john.residence?.address?.street {
 }
 // Prints "Unable to retrieve the address."
 ```
+  * the value of `john.residence.address` is currently `nil`
+    * `john.residence?.address?.street` fails
+  * The type of `street` is `String?`
+  * the return value of `john.residence?.address?.street` is `String?`
+    * the underlying optional type of the property is `String?`
+  * use multilevel optional chaining to set an actual value for `john.residence.address` and `street`
+  ```swift
+  let johnsAddress = Address()
+  johnsAddress.buildingName = "The Larches"
+  johnsAddress.street = "Laurel Street"
+  john.residence?.address = johnsAddress
+
+  if let johnsStreet = john.residence?.address?.street {
+      print("John's street name is \(johnsStreet).")
+  } else {
+      print("Unable to retrieve the address.")
+  }
+  // Prints "John's street name is Laurel Street."
+  ```
+  * the attempt to set `adress` of `john.residence` will succeed, because the value of `john.residence` currently contains a valid `Residence` instance
+## 6. Chaining on Methods with Optional Return Values
+* Optional chaining can be use to call a method that returns a value of optional type and to chain on that method's return value if needed
+```swift
+if let buildingIdentifier = john.residence?.address?.buildingIdentifier() {
+    print("John's building identifier is \(buildingIdentifier).")
+}
+// Prints "John's building identifier is The Larches."
+```
+  * calls `Address`'s `buildingIdentifier()` through optional chaining
+  * `buildingIdentifier()` returns a `String?` value
+* question mark after the parentheses : further optional chaining on the return value of `buildingIdentifier()`
+  * the optional value is the `buildingIdentifier()`'s return value not the method itself
+```swift
+if let beginsWithThe =
+    john.residence?.address?.buildingIdentifier()?.hasPrefix("The") {
+    if beginsWithThe {
+        print("John's building identifier begins with \"The\".")
+    } else {
+        print("John's building identifier doesn't begin with \"The\".")
+    }
+}
+// Prints "John's building identifier begins with "The"."
+```
