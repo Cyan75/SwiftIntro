@@ -1,4 +1,4 @@
-# Optional Chaining
+# Optional Chaining 
 > * optional chaining : querying and calling properties, methods, and subscripts on an optional that might currently be nil
 
 ## 1. Optional Chaining as Alternative to Forced Unwrapping
