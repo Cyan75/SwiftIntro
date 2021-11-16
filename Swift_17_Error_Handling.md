@@ -95,3 +95,79 @@ struct PurchasedSnack {
 }
 ```
 ### 2. Handling Errors Using `do-catch`
+* if an error is thrown by the code in the `do` clause, it is matched against the `catch` clauses to determine which one of them can handle the error 
+```swift
+do {
+    try expression
+    statements
+} catch pattern 1 {
+    statements
+} catch pattern 2 where condition {
+    statements
+} catch pattern 3, pattern 4 where condition {
+    statements
+} catch {
+    statements
+}
+```
+* if a catch clause does not have a `pattern`, the clause matches any error and binds the error to a local constant named `error`
+```swift
+var vendingMachine = VendingMachine()
+vendingMachine.coinsDeposited = 8
+do {
+    try buyFavoriteSnack(person: "Alice", vendingMachine: vendingMachine)
+    print("Success! Yum.")
+} catch VendingMachineError.invalidSelection {
+    print("Invalid Selection.")
+} catch VendingMachineError.outOfStock {
+    print("Out of Stock.")
+} catch VendingMachineError.insufficientFunds(let coinsNeeded) {
+    print("Insufficient funds. Please insert an additional \(coinsNeeded) coins.")
+} catch {
+    print("Unexpected error: \(error).")
+}
+// Prints "Insufficient funds. Please insert an additional 2 coins."
+```
+* if an error is thrown, execution immediately transfers to the `catch` clauses
+* `catch` clauses decide whether to allow propagation to continue
+* when no pattern is matched, the error gets caught be the final `catch` clause and is bound to a local `error` constant
+  * the error propagates to the surrounding scope
+* a propagated error must be handled by some surrounding scope
+  * nonthrowing function : an enclosing `do-catch` 
+  * throwing function
+    * an enclosing `do-catch` 
+    * the caller
+  * a runtime error takes place if the error propagates to the top level scope without being handled
+  ```swift
+  func nourish(with item: String) throws {
+    do {
+        try vendingMachine.vend(itemNamed: item)
+    } catch is VendingMachineError {
+        print("Couldn't buy that from the vending machine.")
+    }
+  }
+
+  do {
+    try nourish(with: "Beet-Flavored Chips")
+  } catch {
+      print("Unexpected non-vending-machine-related error: \(error)")
+  }
+  // Prints "Couldn't buy that from the vending machine."
+  ```
+  * `nourish(with:)` handles the error by printing a message
+    * in case it does not, the error caught by the general `catch` clause
+  * listing several related errors after `catch`
+  ```swift
+  func eat(item: String) throws {
+    do {
+        try vendingMachine.vend(itemNamed: item)
+    } catch VendingMachineError.invalidSelection, VendingMachineError.insufficientFunds, VendingMachineError.outOfStock {
+        print("Invalid selection, out of stock, or not enough money.")
+    }
+  }
+  ```
+  * if any of three listed errors are thrown, this `catch` clause handles them by printing message
+
+### 3. Converting Errors to Optional Values
+
+
