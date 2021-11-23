@@ -169,5 +169,66 @@ do {
   * if any of three listed errors are thrown, this `catch` clause handles them by printing message
 
 ### 3. Converting Errors to Optional Values
+* if an error is thrown while evaluating the `try?`, the value of the expression is `nil`
+```swift
+func someThrowingFunction() throws -> Int {
+    // ...
+}
 
+let x = try? someThrowingFunction()
 
+let y: Int?
+do {
+    y = try someThrowingFunction()
+} catch {
+    y = nil
+}
+```
+  * `someThrowingFunction()` throws an error to set `x` and `y` to be `nil`.
+    * otherwise, `x` and `y` is the value that the function returned
+  * `x` and `y` are optionals whatever type `someThrowingFunction()` returns
+* `try?`: provides concise and consistent error handling
+```swift
+func fetchData() -> Data? {
+    if let data = try? fetchDataFromDisk() { return data }
+    if let data = try? fetchDataFromServer() { return data }
+    return nil
+}
+```
+
+### 4. Disabling Error Propagation
+* use `try!` to disable error propagation
+  * wrap the call in a runtime assertion that no error will be thrown
+  * a runtime error takes place if an error actually is thrown
+  * when the user know that a throwing function or method will not throw an error at runtime
+```swift
+let photo = try! loadImage(atPath: "./Resources/John Appleseed.jpg")
+```
+
+## 3. Specifying Cleanup Actions
+* `defer` : execute the code just before code execution leaves the current block of code
+  * defers execution until the current scope is exited
+  * take care of any necessary cleanup thar should be performed
+  * how the code execution left the code block does not matter
+    * whether by `return` or `break` is not important
+  * may not contain any code that would transfer control out of the statements
+    * by `break`, `return` or by throwing an error
+* defered actions are executed in the reverse order that they are written in the source code
+  * the first `defer` statement executes last
+  * the second `defer` statement executes second to last
+  * the last `defer` statement executes executes first
+```swift
+func processFile(filename: String) throws {
+    if exists(filename) {
+        let file = open(filename)
+        defer {
+            close(file)
+        }
+        while let line = try file.readline() {
+            // Work with the file.
+        }
+        // close(file) is called here, at the end of the scope.
+    }
+}
+```
+* defer statement : ensures that the `open(_:)` has a corresponding call to `close(_:)`
