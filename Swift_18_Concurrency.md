@@ -41,3 +41,32 @@ listPhotos(inGallery: "Summer Vacation") { photoNames in
   let photo = await downloadPhoto(named: name)
   show(photo)
   ```
+  * `listPhotos(inGallery:)` and `downloadPhoto(named:)` take a relatively long time to complete as they need to make network requests
+    * setting them `async` lets the rest of the app's code keep running while the code waits for the picture to be ready
+  * what happends during execution of the code
+    1. the first line runs up to the first `await` 
+       * it calls `listPhotos(inGallery:)` and suspends execution while it waits for that function to return
+    2. while execution is suspended, some other concurrent code in the same program runs
+       *  e.g. a long-running background task continues updating a list of new photo galleries.
+       *  that code also runs until the next `await` or until it completes
+    3.  after `listPhotos(innGallery:)` returns this code continues execution 
+        * it assigns the value that was returned to `photoNames`
+    4. the line defines `sortedNames` and `name` are regular, synchronous code as there is no `await` on these lines
+    5. the next `await` marks the call to the `downloadPhoto(named:)` 
+       * this code pauses execution again until that function returns,giving other concurrent code an opportunity to run
+    6. after `downloadPhoto(named:)` returns, its return value is assigned to `photo` and then passed as an argument when calling `snow(_:)`
+  * thread yielding : the suspension points might pauses while waiting for the aynchronous function or method to return
+    * Swift suspends the execution of the code on the current thread, runs some other code on that thread
+  * asynchronous functions or methods can be called only at certain places in the program 
+    * Code in the body of an asynchronous function, method, or property
+    * Code in the static `main()` method of a structure, class, or enumeration that’s marked with `@main`
+    * Code in a detached child task
+* `Task.sleep(_:)` : waits at least the given number of nanoseconds before it returns
+  ```swift
+  func listPhotos(inGallery name: String) async -> [String] {
+    await Task.sleep(2 * 1_000_000_000)  // Two seconds
+    return ["IMG001", "IMG99", "IMG0404"]
+  }
+  ```
+* ## Asychronous Sequence
+
