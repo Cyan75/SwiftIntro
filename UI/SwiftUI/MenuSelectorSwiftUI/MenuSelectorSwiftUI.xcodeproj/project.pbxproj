@@ -1,0 +1,579 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DB82676428389CF800CF7229 /* MenuSelectorSwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB82676328389CF800CF7229 /* MenuSelectorSwiftUIApp.swift */; };
+		DB82676628389CF800CF7229 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB82676528389CF800CF7229 /* ContentView.swift */; };
+		DB82676828389CF900CF7229 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB82676728389CF900CF7229 /* Assets.xcassets */; };
+		DB82676B28389CF900CF7229 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB82676A28389CF900CF7229 /* Preview Assets.xcassets */; };
+		DB82677628389CF900CF7229 /* MenuSelectorSwiftUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB82677528389CF900CF7229 /* MenuSelectorSwiftUITests.swift */; };
+		DB82678128389CF900CF7229 /* MenuSelectorSwiftUIUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB82678028389CF900CF7229 /* MenuSelectorSwiftUIUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DB82677228389CF900CF7229 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DB82675828389CF800CF7229 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DB82675F28389CF800CF7229;
+			remoteInfo = MenuSelectorSwiftUI;
+		};
+		DB82677D28389CF900CF7229 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DB82675828389CF800CF7229 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DB82675F28389CF800CF7229;
+			remoteInfo = MenuSelectorSwiftUI;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		DB82676028389CF800CF7229 /* MenuSelectorSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MenuSelectorSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB82676328389CF800CF7229 /* MenuSelectorSwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSelectorSwiftUIApp.swift; sourceTree = "<group>"; };
+		DB82676528389CF800CF7229 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		DB82676728389CF900CF7229 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DB82676A28389CF900CF7229 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		DB82676C28389CF900CF7229 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DB82677128389CF900CF7229 /* MenuSelectorSwiftUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MenuSelectorSwiftUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB82677528389CF900CF7229 /* MenuSelectorSwiftUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSelectorSwiftUITests.swift; sourceTree = "<group>"; };
+		DB82677728389CF900CF7229 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DB82677C28389CF900CF7229 /* MenuSelectorSwiftUIUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MenuSelectorSwiftUIUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB82678028389CF900CF7229 /* MenuSelectorSwiftUIUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSelectorSwiftUIUITests.swift; sourceTree = "<group>"; };
+		DB82678228389CF900CF7229 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DB82675D28389CF800CF7229 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DB82676E28389CF900CF7229 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DB82677928389CF900CF7229 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DB82675728389CF800CF7229 = {
+			isa = PBXGroup;
+			children = (
+				DB82676228389CF800CF7229 /* MenuSelectorSwiftUI */,
+				DB82677428389CF900CF7229 /* MenuSelectorSwiftUITests */,
+				DB82677F28389CF900CF7229 /* MenuSelectorSwiftUIUITests */,
+				DB82676128389CF800CF7229 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DB82676128389CF800CF7229 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DB82676028389CF800CF7229 /* MenuSelectorSwiftUI.app */,
+				DB82677128389CF900CF7229 /* MenuSelectorSwiftUITests.xctest */,
+				DB82677C28389CF900CF7229 /* MenuSelectorSwiftUIUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DB82676228389CF800CF7229 /* MenuSelectorSwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				DB82676328389CF800CF7229 /* MenuSelectorSwiftUIApp.swift */,
+				DB82676528389CF800CF7229 /* ContentView.swift */,
+				DB82676728389CF900CF7229 /* Assets.xcassets */,
+				DB82676C28389CF900CF7229 /* Info.plist */,
+				DB82676928389CF900CF7229 /* Preview Content */,
+			);
+			path = MenuSelectorSwiftUI;
+			sourceTree = "<group>";
+		};
+		DB82676928389CF900CF7229 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				DB82676A28389CF900CF7229 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		DB82677428389CF900CF7229 /* MenuSelectorSwiftUITests */ = {
+			isa = PBXGroup;
+			children = (
+				DB82677528389CF900CF7229 /* MenuSelectorSwiftUITests.swift */,
+				DB82677728389CF900CF7229 /* Info.plist */,
+			);
+			path = MenuSelectorSwiftUITests;
+			sourceTree = "<group>";
+		};
+		DB82677F28389CF900CF7229 /* MenuSelectorSwiftUIUITests */ = {
+			isa = PBXGroup;
+			children = (
+				DB82678028389CF900CF7229 /* MenuSelectorSwiftUIUITests.swift */,
+				DB82678228389CF900CF7229 /* Info.plist */,
+			);
+			path = MenuSelectorSwiftUIUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DB82675F28389CF800CF7229 /* MenuSelectorSwiftUI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DB82678528389CF900CF7229 /* Build configuration list for PBXNativeTarget "MenuSelectorSwiftUI" */;
+			buildPhases = (
+				DB82675C28389CF800CF7229 /* Sources */,
+				DB82675D28389CF800CF7229 /* Frameworks */,
+				DB82675E28389CF800CF7229 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MenuSelectorSwiftUI;
+			productName = MenuSelectorSwiftUI;
+			productReference = DB82676028389CF800CF7229 /* MenuSelectorSwiftUI.app */;
+			productType = "com.apple.product-type.application";
+		};
+		DB82677028389CF900CF7229 /* MenuSelectorSwiftUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DB82678828389CF900CF7229 /* Build configuration list for PBXNativeTarget "MenuSelectorSwiftUITests" */;
+			buildPhases = (
+				DB82676D28389CF900CF7229 /* Sources */,
+				DB82676E28389CF900CF7229 /* Frameworks */,
+				DB82676F28389CF900CF7229 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DB82677328389CF900CF7229 /* PBXTargetDependency */,
+			);
+			name = MenuSelectorSwiftUITests;
+			productName = MenuSelectorSwiftUITests;
+			productReference = DB82677128389CF900CF7229 /* MenuSelectorSwiftUITests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		DB82677B28389CF900CF7229 /* MenuSelectorSwiftUIUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DB82678B28389CF900CF7229 /* Build configuration list for PBXNativeTarget "MenuSelectorSwiftUIUITests" */;
+			buildPhases = (
+				DB82677828389CF900CF7229 /* Sources */,
+				DB82677928389CF900CF7229 /* Frameworks */,
+				DB82677A28389CF900CF7229 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DB82677E28389CF900CF7229 /* PBXTargetDependency */,
+			);
+			name = MenuSelectorSwiftUIUITests;
+			productName = MenuSelectorSwiftUIUITests;
+			productReference = DB82677C28389CF900CF7229 /* MenuSelectorSwiftUIUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DB82675828389CF800CF7229 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1250;
+				LastUpgradeCheck = 1250;
+				TargetAttributes = {
+					DB82675F28389CF800CF7229 = {
+						CreatedOnToolsVersion = 12.5.1;
+					};
+					DB82677028389CF900CF7229 = {
+						CreatedOnToolsVersion = 12.5.1;
+						TestTargetID = DB82675F28389CF800CF7229;
+					};
+					DB82677B28389CF900CF7229 = {
+						CreatedOnToolsVersion = 12.5.1;
+						TestTargetID = DB82675F28389CF800CF7229;
+					};
+				};
+			};
+			buildConfigurationList = DB82675B28389CF800CF7229 /* Build configuration list for PBXProject "MenuSelectorSwiftUI" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = DB82675728389CF800CF7229;
+			productRefGroup = DB82676128389CF800CF7229 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DB82675F28389CF800CF7229 /* MenuSelectorSwiftUI */,
+				DB82677028389CF900CF7229 /* MenuSelectorSwiftUITests */,
+				DB82677B28389CF900CF7229 /* MenuSelectorSwiftUIUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DB82675E28389CF800CF7229 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB82676B28389CF900CF7229 /* Preview Assets.xcassets in Resources */,
+				DB82676828389CF900CF7229 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DB82676F28389CF900CF7229 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DB82677A28389CF900CF7229 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DB82675C28389CF800CF7229 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB82676628389CF800CF7229 /* ContentView.swift in Sources */,
+				DB82676428389CF800CF7229 /* MenuSelectorSwiftUIApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DB82676D28389CF900CF7229 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB82677628389CF900CF7229 /* MenuSelectorSwiftUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DB82677828389CF900CF7229 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB82678128389CF900CF7229 /* MenuSelectorSwiftUIUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DB82677328389CF900CF7229 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DB82675F28389CF800CF7229 /* MenuSelectorSwiftUI */;
+			targetProxy = DB82677228389CF900CF7229 /* PBXContainerItemProxy */;
+		};
+		DB82677E28389CF900CF7229 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DB82675F28389CF800CF7229 /* MenuSelectorSwiftUI */;
+			targetProxy = DB82677D28389CF900CF7229 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		DB82678328389CF900CF7229 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		DB82678428389CF900CF7229 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DB82678628389CF900CF7229 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"MenuSelectorSwiftUI/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = MenuSelectorSwiftUI/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.cyan.MenuSelectorSwiftUI;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DB82678728389CF900CF7229 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"MenuSelectorSwiftUI/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = MenuSelectorSwiftUI/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.cyan.MenuSelectorSwiftUI;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		DB82678928389CF900CF7229 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = MenuSelectorSwiftUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.cyan.MenuSelectorSwiftUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MenuSelectorSwiftUI.app/MenuSelectorSwiftUI";
+			};
+			name = Debug;
+		};
+		DB82678A28389CF900CF7229 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = MenuSelectorSwiftUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.cyan.MenuSelectorSwiftUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MenuSelectorSwiftUI.app/MenuSelectorSwiftUI";
+			};
+			name = Release;
+		};
+		DB82678C28389CF900CF7229 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = MenuSelectorSwiftUIUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.cyan.MenuSelectorSwiftUIUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = MenuSelectorSwiftUI;
+			};
+			name = Debug;
+		};
+		DB82678D28389CF900CF7229 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = MenuSelectorSwiftUIUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.cyan.MenuSelectorSwiftUIUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = MenuSelectorSwiftUI;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DB82675B28389CF800CF7229 /* Build configuration list for PBXProject "MenuSelectorSwiftUI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DB82678328389CF900CF7229 /* Debug */,
+				DB82678428389CF900CF7229 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DB82678528389CF900CF7229 /* Build configuration list for PBXNativeTarget "MenuSelectorSwiftUI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DB82678628389CF900CF7229 /* Debug */,
+				DB82678728389CF900CF7229 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DB82678828389CF900CF7229 /* Build configuration list for PBXNativeTarget "MenuSelectorSwiftUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DB82678928389CF900CF7229 /* Debug */,
+				DB82678A28389CF900CF7229 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DB82678B28389CF900CF7229 /* Build configuration list for PBXNativeTarget "MenuSelectorSwiftUIUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DB82678C28389CF900CF7229 /* Debug */,
+				DB82678D28389CF900CF7229 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DB82675828389CF800CF7229 /* Project object */;
+}
