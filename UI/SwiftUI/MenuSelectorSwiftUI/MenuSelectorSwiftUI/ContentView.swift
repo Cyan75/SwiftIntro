@@ -26,16 +26,26 @@ struct ContentView: View {
 //        }
         VStack {
             Text("Press the button below")
-                .font(.system(size: 25))
+                .font(.system(size: 25));
             
             Button(action: {
                 print("Button is pressed")
             }) {
                 Text("Press me")
                     .padding()
-                    .font(.body)
+                    .font(.headline.bold())
                     .foregroundColor(.white)
-                    .background(Color.blue)
+//                    .background(Color.blue.opacity(0.75));
+                    .background(Color(red: 0, green: 168, blue: 255 ,opacity: 0.75));
+            }/*.frame(maxWidth : .infinity)*/
+            Form{
+                Group{
+                    Text("Hullo World").font(.system(size: 25));
+                    Section(header: Text("Zones")){
+                        Text("Hullo World").font(.system(size: 25));
+                    }
+                }
+
             }
         }
     }
