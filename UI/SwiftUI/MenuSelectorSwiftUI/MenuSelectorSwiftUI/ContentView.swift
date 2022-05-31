@@ -12,7 +12,7 @@ struct ContentView: View {
 //    let zones = ["sector1","sector2","sector3","sector4","sector5","sector6","sector7"]
     @State private var zoneSelection = "";
     @State private var header = "¡Bienvenue à RMS!";
-    @State private var headerDescription = "Random Menu Selector";
+    @State private var headerDescription = "Random Menu Suggester";
     
     var body: some View {
         VStack(spacing: /*@START_MENU_TOKEN@*/nil/*@END_MENU_TOKEN@*/) {
