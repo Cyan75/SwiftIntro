@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DB137AFE2849111500A52632 /* Hello.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DB137AFC2849111500A52632 /* Hello.cpp */; };
+		DB137B01284911F900A52632 /* HelloWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = DB137B00284911F900A52632 /* HelloWrapper.mm */; };
 		DB82676428389CF800CF7229 /* MenuSelectorSwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB82676328389CF800CF7229 /* MenuSelectorSwiftUIApp.swift */; };
 		DB82676628389CF800CF7229 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB82676528389CF800CF7229 /* ContentView.swift */; };
 		DB82676828389CF900CF7229 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB82676728389CF900CF7229 /* Assets.xcassets */; };
@@ -33,6 +35,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DB137AF528490C5500A52632 /* MenuSelectorSwiftUI-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MenuSelectorSwiftUI-Bridging-Header.h"; sourceTree = "<group>"; };
+		DB137AFC2849111500A52632 /* Hello.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Hello.cpp; sourceTree = "<group>"; };
+		DB137AFD2849111500A52632 /* Hello.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Hello.hpp; sourceTree = "<group>"; };
+		DB137AFF284911A700A52632 /* HelloWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelloWrapper.h; sourceTree = "<group>"; };
+		DB137B00284911F900A52632 /* HelloWrapper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = HelloWrapper.mm; sourceTree = "<group>"; };
+		DB137B032849134500A52632 /* SwiftCPP-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SwiftCPP-Bridging-Header.h"; sourceTree = "<group>"; };
 		DB82676028389CF800CF7229 /* MenuSelectorSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MenuSelectorSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB82676328389CF800CF7229 /* MenuSelectorSwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSelectorSwiftUIApp.swift; sourceTree = "<group>"; };
 		DB82676528389CF800CF7229 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -75,6 +83,7 @@
 		DB82675728389CF800CF7229 = {
 			isa = PBXGroup;
 			children = (
+				DB137B032849134500A52632 /* SwiftCPP-Bridging-Header.h */,
 				DB82676228389CF800CF7229 /* MenuSelectorSwiftUI */,
 				DB82677428389CF900CF7229 /* MenuSelectorSwiftUITests */,
 				DB82677F28389CF900CF7229 /* MenuSelectorSwiftUIUITests */,
@@ -100,6 +109,11 @@
 				DB82676728389CF900CF7229 /* Assets.xcassets */,
 				DB82676C28389CF900CF7229 /* Info.plist */,
 				DB82676928389CF900CF7229 /* Preview Content */,
+				DB137AFC2849111500A52632 /* Hello.cpp */,
+				DB137AFD2849111500A52632 /* Hello.hpp */,
+				DB137AF528490C5500A52632 /* MenuSelectorSwiftUI-Bridging-Header.h */,
+				DB137AFF284911A700A52632 /* HelloWrapper.h */,
+				DB137B00284911F900A52632 /* HelloWrapper.mm */,
 			);
 			path = MenuSelectorSwiftUI;
 			sourceTree = "<group>";
@@ -197,6 +211,7 @@
 				TargetAttributes = {
 					DB82675F28389CF800CF7229 = {
 						CreatedOnToolsVersion = 12.5.1;
+						LastSwiftMigration = 1250;
 					};
 					DB82677028389CF900CF7229 = {
 						CreatedOnToolsVersion = 12.5.1;
@@ -260,6 +275,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB82676628389CF800CF7229 /* ContentView.swift in Sources */,
+				DB137AFE2849111500A52632 /* Hello.cpp in Sources */,
+				DB137B01284911F900A52632 /* HelloWrapper.mm in Sources */,
 				DB82676428389CF800CF7229 /* MenuSelectorSwiftUIApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -417,6 +434,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"MenuSelectorSwiftUI/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
@@ -428,6 +446,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cyan.MenuSelectorSwiftUI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SwiftCPP-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -438,6 +458,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"MenuSelectorSwiftUI/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
@@ -449,6 +470,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cyan.MenuSelectorSwiftUI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SwiftCPP-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

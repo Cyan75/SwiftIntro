@@ -3,14 +3,14 @@
 #include "Item.hpp"
 
 typedef unsigned int Key;
-typedef std::unordered_map<Key, Item> Collection;
-class ItemCollection {
+typedef std::unordered_map<Key, Item> Map;
+class ItemMap {
    private:
-    Collection *m_collection;
+    Map *m_Map;
 
    public:
-    ItemContainer() {}
+    ItemMap() {}
     void SetItem(Key &key, Item &item());
     Item GetItem(Key &key);
-    auto GetCollectionSize();
+    auto GetMapSize();
 };
